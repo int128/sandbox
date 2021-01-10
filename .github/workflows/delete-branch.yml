@@ -9,4 +9,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: git fetch origin --prune
-    - run: git branch -r | grep origin/ghcp-ci- | cut -d/ -f2 | xargs git push origin --delete
+    - run: git branch -r | grep origin/ghcp-ci- | cut -d/ -f2 | xargs -r git push origin --delete
