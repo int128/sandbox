@@ -10,3 +10,4 @@ jobs:
     steps:
       - run: echo ${{ github.head_ref }}
       - run: echo ${{ github.base_ref }}
+      - run: echo ${{ github.event.pull_request.number }}
