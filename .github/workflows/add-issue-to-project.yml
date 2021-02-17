@@ -1,0 +1,53 @@
+# This will add an issue the specific project.
+#
+# To get a project column id:
+# https://docs.github.com/en/graphql/overview/explorer
+#
+# query {
+#   repository(owner: "int128", name: "sandbox") {
+#     project(number: 1) {
+#       columns(first: 1) {
+#         nodes {
+#           name
+#           id
+#         }
+#       }
+#     }
+#   }
+# }
+
+on:
+  issues:
+    types:
+      - opened
+      - labeled
+  issue_comment:
+    types:
+      - created
+      - edited
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  MUTATION: |
+    mutation($projectColumnId: ID!, $issueID: ID!) {
+      addProjectCard(input: {projectColumnId: $projectColumnId, contentId: $issueID}) {
+        projectColumn {
+          name
+        }
+      }
+    }
+
+jobs:
+  kanban:
+    # when labeled to the issue
+    # when mentioned in the issue
+    # when mentioned in the issue comment
+    if: |
+      (github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'hello')) || 
+      (github.event_name == 'issues' && contains(github.event.issue.body, '@int128')) ||
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@int128'))
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_COLUMN_ID: MDEzOlByb2plY3RDb2x1bW4xMjk3MjU0OQ== # https://github.com/int128/sandbox/projects/1
+    steps:
+      - run: gh api graphql -F "projectColumnId=$PROJECT_COLUMN_ID" -F 'issueID=${{ github.event.issue.node_id }}' -f query="$MUTATION"
