@@ -14,7 +14,7 @@ env:
 
 jobs:
   issue-mention:
-    if: github.event_name == 'issues' && contains(github.event.issue.body, '@int128'
+    if: github.event_name == 'issues' && contains(github.event.issue.body, '@int128')
     runs-on: ubuntu-latest
     steps:
       - run: echo '{"labels":["need-watch"]}' | gh api "${{ github.event.issue.url }}/labels" -X POST --input -
