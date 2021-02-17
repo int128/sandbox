@@ -1,0 +1,22 @@
+on:
+  # mention in an issue
+  issues:
+    types:
+      - opened
+  # mention in an issue comment
+  issue_comment:
+    types:
+      - created
+      - edited
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  mention:
+    if: |
+      (github.event_name == 'issues' && contains(github.event.issue.body, '@int128')) ||
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@int128'))
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo '{"labels":["need-watch"]}' | gh api "${{ github.event.issue.url }}/labels" -X POST --input -
