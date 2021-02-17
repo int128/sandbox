@@ -35,7 +35,7 @@ env:
 
 jobs:
   kanban:
-    if: contains(github.event.issue.labels.*.name, 'hello')
+    if: contains(github.event.issue.labels.*.name, 'need-watch')
     runs-on: ubuntu-latest
     env:
       PROJECT_COLUMN_ID: MDEzOlByb2plY3RDb2x1bW4xMjk3MjU0OQ== # https://github.com/int128/sandbox/projects/1
