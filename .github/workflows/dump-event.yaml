@@ -1,0 +1,12 @@
+name: dump-event
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo ${{ toJSON(github) }} | jq .
