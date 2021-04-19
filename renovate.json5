@@ -3,7 +3,7 @@
   "packageRules": [
     {
       "matchPackageNames": ["summerwind/actions-runner-dind"],
-      "versionScheme": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<compatibility>ubuntu-[\\d\\.]+)-(.+)$"
+      "versionScheme": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<compatibility>ubuntu-[\\d\\.]+)$"
     },
   ],
   "regexManagers": [
