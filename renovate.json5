@@ -1,10 +1,12 @@
 {
   "extends": ["config:base"],
   "regexManagers": [
-    "fileMatch": ["manifests/.+\\.yaml"],
-    "matchStrings": [
-      "image: (?<depName>.*?):(?<currentValue>.*?) # renovate\\n",
-    ],
-    "datasourceTemplate": "docker",
+    {
+      "fileMatch": ["manifests/.+\\.yaml"],
+      "matchStrings": [
+        "image: (?<depName>.*?):(?<currentValue>.*?) # renovate\\n",
+      ],
+      "datasourceTemplate": "docker",
+    },
   ],
 }
