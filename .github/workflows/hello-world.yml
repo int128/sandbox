@@ -1,0 +1,13 @@
+name: hello-world
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: int128/typescript-actions-monorepo/hello-world@main
+      with:
+        name: foo
