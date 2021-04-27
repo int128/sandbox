@@ -8,7 +8,7 @@ spec:
     spec:
       repository: int128/sandbox
       # https://hub.docker.com/r/summerwind/actions-runner-dind/tags
-      image: summerwind/actions-runner-dind:v2.277.1-ubuntu-20.04-f2680b2 # renovate
+      image: summerwind/actions-runner-dind:v2.278.0-ubuntu-20.04-db45a37 # renovate
       dockerdWithinRunnerContainer: true
       resources:
         limits:
