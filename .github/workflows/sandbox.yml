@@ -9,5 +9,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - run: apt-get install gettext-base
+    - run: sudo apt-get install gettext-base
     - run: envsubst --help
