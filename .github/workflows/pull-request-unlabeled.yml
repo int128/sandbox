@@ -1,9 +1,9 @@
-name: pull-request-unlabeled
+name: pull-request-labeled
 
 on:
   pull_request:
     types:
-      - unlabeled
+      - labeled
 
 jobs:
   build:
@@ -11,4 +11,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: git rev-parse HEAD
-      - run: echo "${{ toJSON(github.event.pull_request) }}" | jq .
+      - run: echo '${{ toJSON(github.event.pull_request) }}' | jq .
