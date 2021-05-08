@@ -6,9 +6,13 @@ on:
       - labeled
 
 jobs:
-  build:
+  deploy:
+    if: contains(github.event.pull_request.labels.*.name, 'deploy')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: git rev-parse HEAD
-      - run: echo '${{ toJSON(github.event.pull_request) }}' | jq .
+      - run: |
+          jq <<EOF
+          ${{ toJSON(github.event.pull_request) }}
+          EOF
