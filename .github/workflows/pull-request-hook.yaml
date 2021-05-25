@@ -1,0 +1,13 @@
+name: pull-request-hook
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  show-number:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo {{ github.event.pull_request.number }}
