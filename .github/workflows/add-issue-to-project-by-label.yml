@@ -22,22 +22,24 @@ on:
       - opened
       - labeled
 
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  MUTATION: |
-    mutation($projectColumnId: ID!, $issueID: ID!) {
-      addProjectCard(input: {projectColumnId: $projectColumnId, contentId: $issueID}) {
-        projectColumn {
-          name
-        }
-      }
-    }
-
 jobs:
   kanban:
     if: contains(github.event.issue.labels.*.name, 'need-watch')
     runs-on: ubuntu-latest
-    env:
-      PROJECT_COLUMN_ID: MDEzOlByb2plY3RDb2x1bW4xMjk3MjU0OQ== # https://github.com/int128/sandbox/projects/1
     steps:
-      - run: gh api graphql -F "projectColumnId=$PROJECT_COLUMN_ID" -F 'issueID=${{ github.event.issue.node_id }}' -f query="$MUTATION"
+      - uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const mutation = `mutation($projectColumnId: ID!, $issueID: ID!) {
+              addProjectCard(input: {projectColumnId: $projectColumnId, contentId: $issueID}) {
+                projectColumn {
+                  name
+                }
+              }
+            }`
+            const variables = {
+              projectColumnId: 'MDEzOlByb2plY3RDb2x1bW4xMjk3MjU0OQ==', // https://github.com/int128/sandbox/projects/1
+              contentId: context.payload.issue.node_id,
+            }
+            await github.graphql(mutation, variables)
