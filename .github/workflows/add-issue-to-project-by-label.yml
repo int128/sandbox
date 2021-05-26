@@ -40,6 +40,6 @@ jobs:
             }`
             const variables = {
               projectColumnId: 'MDEzOlByb2plY3RDb2x1bW4xMjk3MjU0OQ==', // https://github.com/int128/sandbox/projects/1
-              contentId: context.payload.issue.node_id,
+              issueID: context.payload.issue.node_id,
             }
             await github.graphql(mutation, variables)
