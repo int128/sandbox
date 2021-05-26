@@ -9,18 +9,33 @@ on:
       - created
       - edited
 
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 jobs:
   issue-mention:
     if: github.event_name == 'issues' && contains(github.event.issue.body, '@int128')
     runs-on: ubuntu-latest
     steps:
-      - run: echo '{"labels":["need-watch"]}' | gh api "${{ github.event.issue.url }}/labels" -X POST --input -
+      - uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['need-watch']
+            })
 
   issue-comment-mention:
     if: github.event_name == 'issue_comment' && contains(github.event.comment.body, '@int128')
     runs-on: ubuntu-latest
     steps:
-      - run: echo '{"labels":["need-watch"]}' | gh api "${{ github.event.issue.url }}/labels" -X POST --input -
+      - uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['need-watch']
+            })
