@@ -10,13 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      # https://github.com/actions/github-script
       - uses: actions/github-script@v4
+        id: list-open-pulls
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            github.issues.createComment({
-              issue_number: context.issue.number,
+            // https://octokit.github.io/rest.js/v18#pulls-list
+            const { data: pulls } = await github.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: ':star: hello world'
+              state: 'open',
+              sort: 'updated',
+              direction: 'desc',
             })
+            return pulls.map((pull) => pull.number)
+      - run: echo ${{ steps.list-open-pulls.result }}
