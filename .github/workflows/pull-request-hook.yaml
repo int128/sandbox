@@ -25,4 +25,7 @@ jobs:
               direction: 'desc',
             })
             return pulls.map((pull) => pull.number)
-      - run: echo ${{ steps.list-open-pulls.result }}
+      - run: |
+          cat <<EOF
+          ${{ steps.list-open-pulls.outputs.result }}
+          EOF
