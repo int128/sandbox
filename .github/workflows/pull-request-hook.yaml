@@ -35,7 +35,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const result = await github.graphql(`
+            const response = await github.graphql(`
               query($owner:String!, $name:String!, $labels:[String!]) {
                 repository(owner: $owner, name: $name) {
                   pullRequests(states: OPEN, labels: $labels, first: 10) {
@@ -50,8 +50,8 @@ jobs:
               name: context.repo.repo,
               labels: ['Deploy']
             })
-            console.log(result)
-            return result.data.repository.pullRequests.nodes.map((node) => `pr-${node.number}`)
+            core.info(`response = ${JSON.stringify(response, undefined, 2)}`)
+            return response.repository.pullRequests.nodes.map((node) => `pr-${node.number}`)
 
       - run: |
           cat <<EOF
