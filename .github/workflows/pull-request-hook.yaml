@@ -24,7 +24,7 @@ jobs:
               sort: 'updated',
               direction: 'desc',
             })
-            return pulls.map((pull) => pull.number)
+            return pulls.map((pull) => `pr-${pull.number}`)
       - run: |
           cat <<EOF
           ${{ steps.list-open-pulls.outputs.result }}
