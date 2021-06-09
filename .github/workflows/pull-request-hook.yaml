@@ -29,3 +29,31 @@ jobs:
           cat <<EOF
           ${{ steps.list-open-pulls.outputs.result }}
           EOF
+
+      - uses: actions/github-script@v4
+        id: list-labeled-pulls
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const result = await github.graphql(`
+              query($owner:String!, $name:String!, $labels:[String!]) {
+                repository(owner: $owner, name: $name) {
+                  pullRequests(states: OPEN, labels: $labels, first: 10) {
+                    nodes {
+                      number
+                    }
+                  }
+                }
+              }
+            `, {
+              owner: context.repo.owner,
+              name: context.repo.repo,
+              labels: ['Deploy']
+            })
+            console.log(result)
+            return result.data.repository.pullRequests.nodes.map((node) => `pr-${node.number}`)
+
+      - run: |
+          cat <<EOF
+          ${{ steps.list-labeled-pulls.outputs.result }}
+          EOF
