@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       # https://github.com/actions/github-script
       - uses: actions/github-script@v4
         id: list-open-pulls
@@ -31,37 +32,16 @@ jobs:
               name: context.repo.repo,
             })
             core.info(`response = ${JSON.stringify(response, undefined, 2)}`)
-            return response.repository.pullRequests.nodes.map((node) => `pr-${node.number}`)
-
-      - run: |
-          cat <<EOF
-          ${{ steps.list-open-pulls.outputs.result }}
-          EOF
+            return response.repository.pullRequests.nodes.map((node) => node.number)
 
       - uses: actions/github-script@v4
-        id: list-labeled-pulls
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const response = await github.graphql(`
-              query ($owner: String!, $name: String!, $labels: [String!]) {
-                repository(owner: $owner, name: $name) {
-                  pullRequests(states: OPEN, orderBy: {field: UPDATED_AT, direction: DESC}, labels: $labels, first: 10) {
-                    nodes {
-                      number
-                    }
-                  }
-                }
-              }
-            `, {
-              owner: context.repo.owner,
-              name: context.repo.repo,
-              labels: ['deploy'],
-            })
-            core.info(`response = ${JSON.stringify(response, undefined, 2)}`)
-            return response.repository.pullRequests.nodes.map((node) => `pr-${node.number}`)
-
-      - run: |
-          cat <<EOF
-          ${{ steps.list-labeled-pulls.outputs.result }}
-          EOF
+            const numbers = ${{ steps.list-open-pulls.outputs.result }}
+            numbers.map((issue_number) =>
+              await github.issues.addLabels({
+                issue_number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['need-watch']
+              }))
