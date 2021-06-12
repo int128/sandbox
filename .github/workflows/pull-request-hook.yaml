@@ -38,7 +38,7 @@ jobs:
         with:
           script: |
             const numbers = ${{ steps.list-open-pulls.outputs.result }}
-            numbers.map((issue_number) => {
+            for (const issue_number of numbers) {
               await github.issues.addLabels({
                 issue_number,
                 owner: context.repo.owner,
