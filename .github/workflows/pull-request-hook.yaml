@@ -39,10 +39,10 @@ jobs:
           script: |
             const numbers = ${{ steps.list-open-pulls.outputs.result }}
             for (const issue_number of numbers) {
-              await github.issues.addLabels({
+              await github.issues.removeLabel({
                 issue_number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                labels: ['need-watch']
+                name: 'need-watch',
               })
             }
