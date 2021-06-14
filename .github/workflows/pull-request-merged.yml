@@ -1,0 +1,18 @@
+name: pull-request-merged
+
+on:
+  pull_request:
+    branches: master
+    types: [closed]
+
+jobs:
+  see:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: env
+      - run: |
+          cat <<EOF
+          ${{ toJSON(github.event.pull_request) }}
+          EOF
