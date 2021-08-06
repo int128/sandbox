@@ -1,0 +1,28 @@
+name: deployment
+
+on:
+  pull_request:
+    branches: master
+
+jobs:
+  create-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v4
+        with:
+          script: |
+            const { data: deployment } = await github.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.payload.pull_request.head.ref,
+              environment: `pull-request-${context.issue.number}`,
+              required_contexts: [],
+            })
+            core.info(JSON.stringify(deployment, undefined, 2))
+            await github.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployment.id,
+              state: 'success',
+              target_url: `https://example.com/pull-request-${context.issue.number}`,
+            })
