@@ -17,6 +17,7 @@ jobs:
               ref: context.ref,
               environment: `pull-request-${context.issue.number}`,
             })
+            core.info(JSON.stringify(deployment, undefined, 2))
             await github.repos.createDeploymentStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
