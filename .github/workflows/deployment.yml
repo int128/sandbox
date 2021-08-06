@@ -23,6 +23,6 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               deployment_id: deployment.id,
-              state: 'pending',
+              state: 'success',
               target_url: `https://example.com/pull-request-${context.issue.number}`,
             })
