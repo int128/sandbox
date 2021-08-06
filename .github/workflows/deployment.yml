@@ -16,6 +16,7 @@ jobs:
               repo: context.repo.repo,
               ref: context.payload.pull_request.head.ref,
               environment: `pull-request-${context.issue.number}`,
+              required_contexts: [],
             })
             core.info(JSON.stringify(deployment, undefined, 2))
             await github.repos.createDeploymentStatus({
