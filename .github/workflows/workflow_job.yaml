@@ -1,5 +1,5 @@
 on:
-  workflow_job: {}
+  workflow_jobs: {}
 
 jobs:
   submit:
@@ -9,5 +9,5 @@ jobs:
       - run: env
       - run: |
           cat <<EOF
-          ${{ toJSON(github.event.workflow_job) }}
+          ${{ toJSON(github.event.workflow_jobs) }}
           EOF
