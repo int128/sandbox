@@ -1,0 +1,13 @@
+on:
+  workflow_job: {}
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - run: env
+      - run: |
+          cat <<EOF
+          ${{ toJSON(github.event.workflow_job) }}
+          EOF
