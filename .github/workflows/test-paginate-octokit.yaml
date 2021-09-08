@@ -1,7 +1,7 @@
 on:
   pull_request:
     paths:
-      - .github/workflows/paginate-pull-requests.yaml
+      - .github/workflows/test-paginate-octokit.yaml
 
 jobs:
   list:
