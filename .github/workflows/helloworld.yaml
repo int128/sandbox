@@ -25,14 +25,14 @@ jobs:
         id: metadata
         with:
           images: ghcr.io/${{ github.repository }}/helloworld
-        # map git tag to docker tag
-        # e.g. helloworld/v1.0.0 -> v1.0.0
-        # https://github.com/docker/metadata-action#typematch
-        tags: |
-          type=ref,event=branch
-          type=ref,event=tag
-          type=ref,event=pr
-          type=match,pattern=.+-(v.+),group=1
+          # map git tag to docker tag
+          # e.g. helloworld/v1.0.0 -> v1.0.0
+          # https://github.com/docker/metadata-action#typematch
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
+            type=ref,event=pr
+            type=match,pattern=.+-(v.+),group=1
       - uses: docker/login-action@v1
         with:
           registry: ghcr.io
