@@ -15,7 +15,7 @@ jobs:
           script: |
             const pulls = await github.paginate(github.pulls.list, {
               owner: context.repo.owner,
-              name: context.repo.repo,
+              repo: context.repo.repo,
               state: 'open',
               sort: 'updated',
               direction: 'desc',
