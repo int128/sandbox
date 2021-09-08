@@ -1,0 +1,25 @@
+on:
+  pull_request:
+    paths:
+      - .github/workflows/paginate-pull-requests.yaml
+
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List open pull requests
+        id: list-open
+        uses: actions/github-script@v4
+        with:
+          result-encoding: string
+          script: |
+            const pulls = await github.paginate(github.pulls.list, {
+              owner: context.repo.owner,
+              name: context.repo.repo,
+              state: 'open',
+              sort: 'updated',
+              direction: 'desc',
+              per_page: 100,
+            })
+            core.info(`got ${pulls.length} pull request(s)`)
+            return pulls.map((e) => e.number).join('\n')
