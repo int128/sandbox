@@ -56,6 +56,7 @@ jobs:
               target_url: `https://argocd.example.com/pr-${context.issue.number}`,
             })
 
+            /*
             await sleep(1000)
             await github.repos.createDeploymentStatus({
               ...createDeploymentStatus,
@@ -63,3 +64,4 @@ jobs:
               description: 'Application is ready',
               target_url: `https://pr-${context.issue.number}.example.com`,
             })
+            */
