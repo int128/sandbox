@@ -30,6 +30,8 @@ const createDeploymentForMicroservice = async (github, context, core, microservi
     owner: context.repo.owner,
     repo: context.repo.repo,
     deployment_id: deployment.id,
+    environment_url: `https://pr-${context.issue.number}-${microservice}.example.com`,
+    log_url: `https://argocd.example.com/pr-${context.issue.number}-${microservice}`,
     mediaType: {
       previews: ['flash'],
     },
@@ -40,7 +42,6 @@ const createDeploymentForMicroservice = async (github, context, core, microservi
     ...createDeploymentStatus,
     state: 'queued',
     description: 'Waiting for Argo CD polling',
-    target_url: `https://argocd.example.com/pr-${context.issue.number}-${microservice}`,
   })
 
   await sleep(5000 * Math.random())
@@ -48,7 +49,6 @@ const createDeploymentForMicroservice = async (github, context, core, microservi
     ...createDeploymentStatus,
     state: 'pending',
     description: 'Argo CD is syncing',
-    target_url: `https://argocd.example.com/pr-${context.issue.number}-${microservice}`,
   })
 
   await sleep(5000 * Math.random())
@@ -56,7 +56,6 @@ const createDeploymentForMicroservice = async (github, context, core, microservi
     ...createDeploymentStatus,
     state: 'in_progress',
     description: 'Waiting for ready',
-    target_url: `https://argocd.example.com/pr-${context.issue.number}-${microservice}`,
   })
 
   await sleep(5000 * Math.random())
@@ -64,7 +63,6 @@ const createDeploymentForMicroservice = async (github, context, core, microservi
     ...createDeploymentStatus,
     state: 'success',
     description: 'Application is ready',
-    target_url: `https://pr-${context.issue.number}-${microservice}.example.com`,
   })
 }
 
