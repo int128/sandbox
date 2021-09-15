@@ -1,15 +1,27 @@
 const sleep = msec => new Promise(resolve => setTimeout(resolve, msec))
 
-const getOrCreateDeployment = async (github, context, core, environment) => {
+const rereateDeployment = async (github, context, core, environment) => {
   const { data: deploymentList } = await github.repos.listDeployments({
     owner: context.repo.owner,
     repo: context.repo.repo,
     ref: context.payload.pull_request.head.ref,
     environment,
-    per_page: 1,
   })
   if (deploymentList.length > 0) {
     return deploymentList[0]
+  }
+  for (const deployment of deploymentList) {
+    await github.repos.createDeploymentStatus({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      deployment_id: deployment.id,
+      state: 'inactive',
+    })
+    await github.repos.deleteDeployment({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      deployment_id: deployment.id,
+    })
   }
 
   const { data: deployment } = await github.repos.createDeployment({
@@ -25,7 +37,7 @@ const getOrCreateDeployment = async (github, context, core, environment) => {
 }
 
 const createDeploymentForMicroservice = async (github, context, core, microservice) => {
-  const deployment = await getOrCreateDeployment(github, context, core, `pr-${context.issue.number}-${microservice}`)
+  const deployment = await rereateDeployment(github, context, core, `pr-${context.issue.number}-${microservice}`)
   const createDeploymentStatus = {
     owner: context.repo.owner,
     repo: context.repo.repo,
