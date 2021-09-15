@@ -1,16 +1,31 @@
 const sleep = msec => new Promise(resolve => setTimeout(resolve, msec))
 
-const createDeployment = async (github, context, core, microservice) => {
+const getOrCreateDeployment = async (github, context, core, environment) => {
+  const { data: deploymentList } = await github.repos.listDeployments({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    ref: context.payload.pull_request.head.ref,
+    environment,
+    per_page: 1,
+  })
+  if (deploymentList.length > 0) {
+    return deploymentList[0]
+  }
+
   const { data: deployment } = await github.repos.createDeployment({
     owner: context.repo.owner,
     repo: context.repo.repo,
     ref: context.payload.pull_request.head.ref,
-    environment: `pr-${context.issue.number}-${microservice}`,
+    environment,
     required_contexts: [],
     auto_merge: false,
   })
   core.info(JSON.stringify(deployment, undefined, 2))
+  return deployment
+}
 
+const createDeploymentForMicroservice = async (github, context, core, microservice) => {
+  const deployment = await getOrCreateDeployment(github, context, core, `pr-${context.issue.number}-${microservice}`)
   const createDeploymentStatus = {
     owner: context.repo.owner,
     repo: context.repo.repo,
@@ -55,11 +70,11 @@ const createDeployment = async (github, context, core, microservice) => {
 
 module.exports = async ({ github, context, core }) => {
   await Promise.all([
-    createDeployment(github, context, core, 'frontend'),
-    createDeployment(github, context, core, 'backend'),
-    createDeployment(github, context, core, 'gateway'),
-    createDeployment(github, context, core, 'payment'),
-    createDeployment(github, context, core, 'authentication'),
-    createDeployment(github, context, core, 'support'),
+    createDeploymentForMicroservice(github, context, core, 'frontend'),
+    createDeploymentForMicroservice(github, context, core, 'backend'),
+    createDeploymentForMicroservice(github, context, core, 'gateway'),
+    createDeploymentForMicroservice(github, context, core, 'payment'),
+    createDeploymentForMicroservice(github, context, core, 'authentication'),
+    createDeploymentForMicroservice(github, context, core, 'support'),
   ])
 }
