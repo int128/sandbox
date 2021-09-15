@@ -23,21 +23,26 @@ jobs:
             })
             core.info(JSON.stringify(deployment, undefined, 2))
 
-            await sleep(1000)
-            await github.repos.createDeploymentStatus({
+            const createDeploymentStatus = {
               owner: context.repo.owner,
               repo: context.repo.repo,
               deployment_id: deployment.id,
-              state: 'pending',
+              mediaType: {
+                previews: ['flash'],
+              },
+            }
+
+            await sleep(1000)
+            await github.repos.createDeploymentStatus({
+              ...createDeploymentStatus,
+              state: 'queued',
               description: 'Waiting for Argo CD polling',
               target_url: `https://argocd.example.com/pr-${context.issue.number}`,
             })
 
             await sleep(1000)
             await github.repos.createDeploymentStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              deployment_id: deployment.id,
+              ...createDeploymentStatus,
               state: 'pending',
               description: 'Argo CD is syncing',
               target_url: `https://argocd.example.com/pr-${context.issue.number}`,
@@ -45,19 +50,15 @@ jobs:
 
             await sleep(1000)
             await github.repos.createDeploymentStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              deployment_id: deployment.id,
-              state: 'pending',
+              ...createDeploymentStatus,
+              state: 'in_progress',
               description: 'Waiting for ready',
               target_url: `https://argocd.example.com/pr-${context.issue.number}`,
             })
 
             await sleep(1000)
             await github.repos.createDeploymentStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              deployment_id: deployment.id,
+              ...createDeploymentStatus,
               state: 'success',
               description: 'Application is ready',
               target_url: `https://pr-${context.issue.number}.example.com`,
