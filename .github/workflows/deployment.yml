@@ -32,7 +32,7 @@ jobs:
               },
             }
 
-            await sleep(1000)
+            await sleep(5000)
             await github.repos.createDeploymentStatus({
               ...createDeploymentStatus,
               state: 'queued',
@@ -40,7 +40,7 @@ jobs:
               target_url: `https://argocd.example.com/pr-${context.issue.number}`,
             })
 
-            await sleep(1000)
+            await sleep(5000)
             await github.repos.createDeploymentStatus({
               ...createDeploymentStatus,
               state: 'pending',
@@ -48,7 +48,7 @@ jobs:
               target_url: `https://argocd.example.com/pr-${context.issue.number}`,
             })
 
-            await sleep(1000)
+            await sleep(5000)
             await github.repos.createDeploymentStatus({
               ...createDeploymentStatus,
               state: 'in_progress',
@@ -56,12 +56,10 @@ jobs:
               target_url: `https://argocd.example.com/pr-${context.issue.number}`,
             })
 
-            /*
-            await sleep(1000)
+            await sleep(5000)
             await github.repos.createDeploymentStatus({
               ...createDeploymentStatus,
               state: 'success',
               description: 'Application is ready',
               target_url: `https://pr-${context.issue.number}.example.com`,
             })
-            */
