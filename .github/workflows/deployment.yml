@@ -11,6 +11,8 @@ jobs:
       - uses: actions/github-script@v4
         with:
           script: |
+            const sleep = msec => new Promise(resolve => setTimeout(resolve, msec))
+
             const { data: deployment } = await github.repos.createDeployment({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -21,15 +23,17 @@ jobs:
             })
             core.info(JSON.stringify(deployment, undefined, 2))
 
+            await sleep(1000)
             await github.repos.createDeploymentStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
               deployment_id: deployment.id,
-              state: 'queued',
+              state: 'pending',
               description: 'Waiting for Argo CD polling',
               target_url: `https://argocd.example.com/pr-${context.issue.number}`,
             })
 
+            await sleep(1000)
             await github.repos.createDeploymentStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -39,15 +43,17 @@ jobs:
               target_url: `https://argocd.example.com/pr-${context.issue.number}`,
             })
 
+            await sleep(1000)
             await github.repos.createDeploymentStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
               deployment_id: deployment.id,
-              state: 'in_progress',
+              state: 'pending',
               description: 'Waiting for ready',
               target_url: `https://argocd.example.com/pr-${context.issue.number}`,
             })
 
+            await sleep(1000)
             await github.repos.createDeploymentStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
