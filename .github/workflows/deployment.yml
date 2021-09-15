@@ -17,12 +17,42 @@ jobs:
               ref: context.payload.pull_request.head.ref,
               environment: `pull-request-${context.issue.number}`,
               required_contexts: [],
+              auto_merge: false,
             })
             core.info(JSON.stringify(deployment, undefined, 2))
+
+            await github.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployment.id,
+              state: 'queued',
+              description: 'Waiting for Argo CD polling',
+              target_url: `https://argocd.example.com/pr-${context.issue.number}`,
+            })
+
+            await github.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployment.id,
+              state: 'pending',
+              description: 'Argo CD is syncing',
+              target_url: `https://argocd.example.com/pr-${context.issue.number}`,
+            })
+
+            await github.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployment.id,
+              state: 'in_progress',
+              description: 'Waiting for ready',
+              target_url: `https://argocd.example.com/pr-${context.issue.number}`,
+            })
+
             await github.repos.createDeploymentStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
               deployment_id: deployment.id,
               state: 'success',
-              target_url: `https://example.com/pull-request-${context.issue.number}`,
+              description: 'Application is ready',
+              target_url: `https://pr-${context.issue.number}.example.com`,
             })
