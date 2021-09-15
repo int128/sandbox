@@ -7,25 +7,28 @@ const rereateDeployment = async (github, context, core, environment) => {
     ref: context.payload.pull_request.head.ref,
     environment,
   })
-  for (const deployment of deploymentList) {
-    await github.repos.createDeploymentStatus({
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      deployment_id: deployment.id,
-      state: 'inactive',
-      mediaType: {
-        previews: ['flash', 'ant-man'],
-      },
-    })
-    await github.repos.deleteDeployment({
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      deployment_id: deployment.id,
-      mediaType: {
-        previews: ['flash', 'ant-man'],
-      },
-    })
+  if (deploymentList.length > 0) {
+    return deploymentList[0]
   }
+  // for (const deployment of deploymentList) {
+  //   await github.repos.createDeploymentStatus({
+  //     owner: context.repo.owner,
+  //     repo: context.repo.repo,
+  //     deployment_id: deployment.id,
+  //     state: 'inactive',
+  //     mediaType: {
+  //       previews: ['flash', 'ant-man'],
+  //     },
+  //   })
+  //   await github.repos.deleteDeployment({
+  //     owner: context.repo.owner,
+  //     repo: context.repo.repo,
+  //     deployment_id: deployment.id,
+  //     mediaType: {
+  //       previews: ['flash', 'ant-man'],
+  //     },
+  //   })
+  // }
 
   const { data: deployment } = await github.repos.createDeployment({
     owner: context.repo.owner,
@@ -47,6 +50,7 @@ const createDeploymentForMicroservice = async (github, context, core, microservi
     deployment_id: deployment.id,
     environment_url: `https://pr-${context.issue.number}-${microservice}.example.com`,
     log_url: `https://argocd.example.com/pr-${context.issue.number}-${microservice}`,
+    auto_inactive: true,
     mediaType: {
       previews: ['flash', 'ant-man'],
     },
