@@ -7,9 +7,6 @@ const rereateDeployment = async (github, context, core, environment) => {
     ref: context.payload.pull_request.head.ref,
     environment,
   })
-  if (deploymentList.length > 0) {
-    return deploymentList[0]
-  }
   for (const deployment of deploymentList) {
     await github.repos.createDeploymentStatus({
       owner: context.repo.owner,
