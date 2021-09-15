@@ -14,7 +14,7 @@ const rereateDeployment = async (github, context, core, environment) => {
       deployment_id: deployment.id,
       state: 'inactive',
       mediaType: {
-        previews: ['flash'],
+        previews: ['flash', 'ant-man'],
       },
     })
     await github.repos.deleteDeployment({
@@ -22,7 +22,7 @@ const rereateDeployment = async (github, context, core, environment) => {
       repo: context.repo.repo,
       deployment_id: deployment.id,
       mediaType: {
-        previews: ['flash'],
+        previews: ['flash', 'ant-man'],
       },
     })
   }
@@ -48,7 +48,7 @@ const createDeploymentForMicroservice = async (github, context, core, microservi
     environment_url: `https://pr-${context.issue.number}-${microservice}.example.com`,
     log_url: `https://argocd.example.com/pr-${context.issue.number}-${microservice}`,
     mediaType: {
-      previews: ['flash'],
+      previews: ['flash', 'ant-man'],
     },
   }
 
