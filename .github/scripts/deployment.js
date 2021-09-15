@@ -13,11 +13,17 @@ const rereateDeployment = async (github, context, core, environment) => {
       repo: context.repo.repo,
       deployment_id: deployment.id,
       state: 'inactive',
+      mediaType: {
+        previews: ['flash'],
+      },
     })
     await github.repos.deleteDeployment({
       owner: context.repo.owner,
       repo: context.repo.repo,
       deployment_id: deployment.id,
+      mediaType: {
+        previews: ['flash'],
+      },
     })
   }
 
