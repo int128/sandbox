@@ -54,12 +54,12 @@ const createDeployment = async (github, context, core, microservice) => {
 }
 
 module.exports = async ({ github, context, core }) => {
-  await Promise.all(
+  await Promise.all([
     createDeployment(github, context, core, 'frontend'),
     createDeployment(github, context, core, 'backend'),
     createDeployment(github, context, core, 'gateway'),
     createDeployment(github, context, core, 'payment'),
     createDeployment(github, context, core, 'authentication'),
     createDeployment(github, context, core, 'support'),
-  )
+  ])
 }
