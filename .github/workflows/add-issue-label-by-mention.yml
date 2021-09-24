@@ -14,7 +14,7 @@ jobs:
     if: github.event_name == 'issues' && contains(github.event.issue.body, '@int128')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v4
+      - uses: actions/github-script@v5
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -29,7 +29,7 @@ jobs:
     if: github.event_name == 'issue_comment' && contains(github.event.comment.body, '@int128')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v4
+      - uses: actions/github-script@v5
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
