@@ -1,2 +1,2 @@
-FROM scratch
+FROM alpine
 RUN env
