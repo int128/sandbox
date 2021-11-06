@@ -41,7 +41,7 @@ jobs:
       # https://github.com/GoogleContainerTools/kaniko#running-kaniko-in-docker
       - run: |
           docker run \
-            -v $(pwd):/workspace \
+            -v $(pwd)/helloworld:/workspace \
             -v ~/.docker/config.json:/kaniko/.docker/config.json:ro \
             gcr.io/kaniko-project/executor:latest \
             --dockerfile /workspace/Dockerfile \
