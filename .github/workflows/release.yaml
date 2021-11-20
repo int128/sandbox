@@ -13,6 +13,6 @@ jobs:
   create:
     runs-on: ubuntu-latest
     steps:
-      - run: gh pr create -B production -H master -b production -d
+      - run: gh pr create --base ${{ github.event.inputs.base }} --head master --title production --draft
         env:
           GITHUB_TOKEN: ${{ github.token }}
