@@ -14,3 +14,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: gh pr create -B production -H master -b production -d
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
