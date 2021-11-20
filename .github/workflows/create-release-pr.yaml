@@ -1,0 +1,16 @@
+name: release
+
+on:
+  workflow_dispatch:
+    inputs:
+      base:
+        type: choice
+        description: base branch
+        options: 
+          - production
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    steps:
+      - run: gh pr create -B production -H master -b production -d
