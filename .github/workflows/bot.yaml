@@ -14,7 +14,11 @@ jobs:
         id: pull
         with:
           script: |
-            return github.rest.pulls.get(context.issue)
+            return github.rest.pulls.get({
+              owner: context.issue.owner,
+              repo: context.issue.repo,
+              pull_number: context.issue.number,
+            })
       - uses: actions/checkout@v2
         with:
           ref: ${{ fromJSON(steps.pull.outputs.result).data.head.sha }}
