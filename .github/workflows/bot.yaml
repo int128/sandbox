@@ -48,6 +48,7 @@ jobs:
                 sha: pull.head.sha,
               })
             } catch (error) {
+              core.error(error)
               return await github.rest.issues.createComment({
                 owner: context.issue.owner,
                 repo: context.issue.repo,
