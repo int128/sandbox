@@ -57,7 +57,7 @@ jobs:
                 ref: `heads/${pull.base.ref}`,
                 sha: pull.head.sha,
               })
-              await createComment(`Merged ${pull.head.sha} into ${pull.base.ref} on behalf of @${github.actor}`)
+              await createComment(`Merged ${pull.head.sha} into ${pull.base.ref} on behalf of @${context.actor}`)
             } catch (error) {
-              await createComment(`:x: Unable to merge, @${github.actor}:\n${String(error)}`)
+              await createComment(`:x: Unable to merge, @${context.actor}:\n${String(error)}`)
             }
