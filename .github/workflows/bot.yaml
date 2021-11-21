@@ -10,7 +10,7 @@ jobs:
     if: |
       github.event.issue.pull_request &&
       github.event.comment.body == '/approve' &&
-      github.event.comment.user.login == 'int128'
+      github.actor == 'int128'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v5
@@ -27,13 +27,20 @@ jobs:
     if: |
       github.event.issue.pull_request &&
       github.event.comment.body == '/merge' &&
-      github.event.comment.user.login == 'int128'
+      github.actor == 'int128'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v5
         with:
           script: |
             const { owner, repo } = context.issue
+            const createComment = async (body) =>
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: context.issue.number,
+                body: `${body}\n${github.context.serverUrl}/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId}`
+              })
             try {
               const { data: pull } = await github.rest.pulls.get({
                 owner,
@@ -47,17 +54,7 @@ jobs:
                 ref: `heads/${pull.base.ref}`,
                 sha: pull.head.sha,
               })
-              await github.rest.issues.createComment({
-                owner,
-                repo,
-                issue_number: context.issue.number,
-                body: `Merged ${pull.head.sha} into ${pull.base.ref}`
-              })
+              await createComment(`Merged ${pull.head.sha} into ${pull.base.ref} on behalf of @${github.actor}`)
             } catch (error) {
-              await github.rest.issues.createComment({
-                owner,
-                repo,
-                issue_number: context.issue.number,
-                body: `## :x: Unable to merge\n${String(error)}`
-              })
+              await createComment(`:x: Unable to merge: ${String(error)}`)
             }
