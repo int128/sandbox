@@ -33,31 +33,26 @@ jobs:
       - uses: actions/github-script@v5
         with:
           script: |
-            const { owner, repo } = context.issue
-            const createComment = async (body) => {
-              body = `${body}\n${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
-              core.info(`Creating a comment to #{context.issue.number}:\n${body}`)
-              return await github.rest.issues.createComment({
-                owner,
-                repo,
-                issue_number: context.issue.number,
-                body,
-              })
-            }
+            const createComment = (body) => github.rest.issues.createComment({
+              owner: context.issue.owner,
+              repo: context.issue.repo,
+              issue_number: context.issue.number,
+              body: `${body}\n${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            })
             try {
               const { data: pull } = await github.rest.pulls.get({
-                owner,
-                repo,
+                owner: context.issue.owner,
+                repo: context.issue.repo,
                 pull_number: context.issue.number,
               })
               core.info(`Updating base ${pull.base.ref} to head ${pull.head.ref}@${pull.head.sha}`)
               await github.rest.git.updateRef({
-                owner,
-                repo,
+                owner: context.issue.owner,
+                repo: context.issue.repo,
                 ref: `heads/${pull.base.ref}`,
                 sha: pull.head.sha,
               })
-              await createComment(`Merged ${pull.head.sha} into ${pull.base.ref} on behalf of @${context.actor}`)
             } catch (error) {
-              await createComment(`:x: Unable to merge, @${context.actor}:\n${String(error)}`)
+              return await createComment(`## :x: Unable to merge\n@${context.actor} ${String(error)}`)
             }
+            return await createComment(`Merged ${pull.head.sha} into ${pull.base.ref} on behalf of @${context.actor}`)
