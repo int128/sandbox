@@ -1,0 +1,17 @@
+name: status
+
+on:
+  pull_request:
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v5
+        with:
+          script: |
+            octokit.rest.checks.create({
+              ...context.repo,
+              name: 'status-demo',
+              head_sha: context.sha,
+            })
