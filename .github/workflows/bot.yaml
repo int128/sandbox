@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/github-script@v5
         with:
-          script: console.log(context.issue)
+          script: console.log(context)
 
   merge:
     if: github.event.issue.pull_request && github.event.issue.body == '/merge'
