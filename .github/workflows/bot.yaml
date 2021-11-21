@@ -40,7 +40,7 @@ jobs:
                 repo: context.issue.repo,
                 pull_number: context.issue.number,
               })
-              core.info(`Updating base ${pull.base.ref} to head ${pull.head.ref}@${pull.head.sha}`)
+              core.info(`Updating ${pull.base.ref} to ${pull.head.ref}@${pull.head.sha}`)
               await github.rest.git.updateRef({
                 owner: context.issue.owner,
                 repo: context.issue.repo,
@@ -48,7 +48,7 @@ jobs:
                 sha: pull.head.sha,
               })
             } catch (error) {
-              core.error(error)
+              core.error(JSON.stringify(error, undefined, 2))
               return await github.rest.issues.createComment({
                 owner: context.issue.owner,
                 repo: context.issue.repo,
