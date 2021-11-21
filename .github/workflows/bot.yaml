@@ -6,15 +6,8 @@ on:
       - created
 
 jobs:
-  dump:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/github-script@v5
-        with:
-          script: console.log(context)
-
   merge:
-    if: github.event.issue.pull_request && github.event.issue.body == '/merge'
+    if: github.event.issue.pull_request && github.event.comment.body == '/merge'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v5
@@ -24,7 +17,7 @@ jobs:
             return github.rest.pulls.get(context.issue)
       - uses: actions/checkout@v2
         with:
-          ref: ${{ fromJSON(steps.pull.outputs.result).data.head.ref }}
+          ref: ${{ fromJSON(steps.pull.outputs.result).data.head.sha }}
       - run: git push origin HEAD:$BASE_REF
         env:
           GITHUB_TOKEN: ${{ github.token }}
