@@ -7,7 +7,10 @@ on:
 
 jobs:
   approve:
-    if: github.event.issue.pull_request && github.event.comment.body == '/approve'
+    if: |
+      github.event.issue.pull_request &&
+      github.event.comment.body == '/approve' &&
+      github.event.comment.user.login == 'int128'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v5
@@ -21,7 +24,10 @@ jobs:
             })
 
   merge:
-    if: github.event.issue.pull_request && github.event.comment.body == '/merge'
+    if: |
+      github.event.issue.pull_request &&
+      github.event.comment.body == '/merge' &&
+      github.event.comment.user.login == 'int128'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v5
