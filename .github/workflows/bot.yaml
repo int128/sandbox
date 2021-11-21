@@ -14,15 +14,14 @@ jobs:
         id: pull
         with:
           script: |
-            return github.rest.pulls.get({
+            const { data: pull } = await github.rest.pulls.get({
               owner: context.issue.owner,
               repo: context.issue.repo,
               pull_number: context.issue.number,
             })
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ fromJSON(steps.pull.outputs.result).data.head.sha }}
-      - run: git push origin HEAD:$BASE_REF
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          BASE_REF: refs/heads/${{ fromJSON(steps.pull.outputs.result).data.base.ref }}
+            await github.rest.git.updateRef({
+              owner: context.issue.owner,
+              repo: context.issue.repo,
+              ref: pull.base.ref,
+              sha: pull.head.sha,
+            })
