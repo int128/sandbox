@@ -6,12 +6,25 @@ on:
       - created
 
 jobs:
+  approve:
+    if: github.event.issue.pull_request && github.event.comment.body == '/approve'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v5
+        with:
+          script: |
+            await github.rest.pulls.createReview({
+              owner: context.issue.owner,
+              repo: context.issue.repo,
+              pull_number: context.issue.number,
+              event: 'APPROVE',
+            })
+
   merge:
     if: github.event.issue.pull_request && github.event.comment.body == '/merge'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v5
-        id: pull
         with:
           script: |
             try {
