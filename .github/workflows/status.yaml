@@ -15,7 +15,7 @@ jobs:
               name: 'status-demo',
               head_sha: context.payload.pull_request.head.sha,
               output: {
-                title: 'Waiting for comment',
+                title: 'Require comment `/merge` to merge',
                 summary: 'To merge, post a comment `/merge` to the pull request',
               },
             })
