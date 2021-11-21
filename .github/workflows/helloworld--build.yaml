@@ -1,4 +1,4 @@
-name: helloworld
+name: helloworld--build
 
 on:
   pull_request:
