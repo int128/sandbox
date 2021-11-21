@@ -14,4 +14,9 @@ jobs:
               ...context.repo,
               name: 'status-demo',
               head_sha: context.payload.pull_request.head.sha,
+              actions: [{
+                label: 'Waiting for comment',
+                description: 'To merge this, post a comment `/merge`',
+                identifier: 'FastForwardBot',
+              }],
             })
