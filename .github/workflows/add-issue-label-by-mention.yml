@@ -1,3 +1,5 @@
+name: add-issue-label-by-mention
+
 on:
   # mention in an issue
   issues:
