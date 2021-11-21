@@ -13,5 +13,5 @@ jobs:
             github.rest.checks.create({
               ...context.repo,
               name: 'status-demo',
-              head_sha: context.sha,
+              head_sha: context.pull_request.head.sha,
             })
