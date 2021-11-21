@@ -1,3 +1,5 @@
+name: add-issue-to-project-on-assigned
+
 # This will add an issue to the specific project.
 #
 # To get a project column id:
