@@ -33,12 +33,7 @@ jobs:
       - uses: actions/github-script@v5
         with:
           script: |
-            const createComment = (body) => github.rest.issues.createComment({
-              owner: context.issue.owner,
-              repo: context.issue.repo,
-              issue_number: context.issue.number,
-              body: `${body}\n${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
-            })
+            const runLink = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
             try {
               const { data: pull } = await github.rest.pulls.get({
                 owner: context.issue.owner,
@@ -53,6 +48,16 @@ jobs:
                 sha: pull.head.sha,
               })
             } catch (error) {
-              return await createComment(`## :x: Unable to merge\n@${context.actor} ${String(error)}`)
+              return await github.rest.issues.createComment({
+                owner: context.issue.owner,
+                repo: context.issue.repo,
+                issue_number: context.issue.number,
+                body: `## :x: Unable to merge\n@${context.actor} ${String(error)}\n${runLink}`,
+              })
             }
-            return await createComment(`Merged ${pull.head.sha} into ${pull.base.ref} on behalf of @${context.actor}`)
+            return await github.rest.issues.createComment({
+              owner: context.issue.owner,
+              repo: context.issue.repo,
+              issue_number: context.issue.number,
+              body: `Updated ${pull.base.ref} to ${pull.head.sha} by fast-forward on behalf of @${context.actor}`
+            })
