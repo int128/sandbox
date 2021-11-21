@@ -1,3 +1,5 @@
+name: add-issue-to-project-by-label
+
 # This will add an issue the specific project.
 #
 # To get a project column id:
