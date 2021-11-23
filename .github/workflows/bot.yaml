@@ -23,7 +23,7 @@ jobs:
               event: 'APPROVE',
             })
 
-  merge:
+  pre-merge:
     if: |
       github.event.issue.pull_request &&
       github.event.comment.body == '/merge' &&
@@ -38,14 +38,27 @@ jobs:
               repo: context.issue.repo,
               pull_number: context.issue.number,
             })
+            await github.rest.checks.create({
+              ...context.repo,
+              name: 'merge-bot',
+              head_sha: pull.merge_commit_sha,
+              status: 'completed',
+              conclusion: 'success',
+            })
+
+  merge:
+    needs: [pre-merge]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v5
+        with:
+          script: |
+            const { data: pull } = await github.rest.pulls.get({
+              owner: context.issue.owner,
+              repo: context.issue.repo,
+              pull_number: context.issue.number,
+            })
             try {
-              await github.rest.checks.create({
-                ...context.repo,
-                name: 'merge-bot',
-                head_sha: pull.merge_commit_sha,
-                status: 'completed',
-                conclusion: 'success',
-              })
               core.info(`Updating ${pull.base.ref} to ${pull.head.ref}@${pull.head.sha}`)
               await github.rest.git.updateRef({
                 owner: context.issue.owner,
