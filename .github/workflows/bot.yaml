@@ -45,6 +45,7 @@ jobs:
   merge:
     if: |
       github.event_name == 'pull_request_review' &&
+      github.event.review.state == 'APPROVED' &&
       github.event.review.body == '/merge'
     runs-on: ubuntu-latest
     steps:
