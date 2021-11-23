@@ -40,6 +40,13 @@ jobs:
                 repo: context.issue.repo,
                 pull_number: context.issue.number,
               })
+              await github.rest.checks.create({
+                ...context.repo,
+                name: 'merge-bot',
+                head_sha: pull.head.sha,
+                status: 'completed',
+                conclusion: 'success',
+              })
               core.info(`Updating ${pull.base.ref} to ${pull.head.ref}@${pull.head.sha}`)
               await github.rest.git.updateRef({
                 owner: context.issue.owner,
@@ -49,11 +56,16 @@ jobs:
               })
             } catch (error) {
               core.error(error)
-              return await github.rest.issues.createComment({
-                owner: context.issue.owner,
-                repo: context.issue.repo,
-                issue_number: context.issue.number,
-                body: `## :x: Unable to merge\n@${context.actor} ${String(error)}\n${runLink}`,
+              return await github.rest.checks.create({
+                ...context.repo,
+                name: 'merge-bot',
+                head_sha: pull.head.sha,
+                status: 'completed',
+                conclusion: 'failure',
+                output: {
+                  title: `Error: ${String(error)}`,
+                  summary: `## :x: Unable to merge\n@${context.actor} ${String(error)}\n${runLink}`,
+                },
               })
             }
             return await github.rest.issues.createComment({
