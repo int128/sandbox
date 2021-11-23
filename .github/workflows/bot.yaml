@@ -4,9 +4,9 @@ on:
   issue_comment:
     types:
       - created
-  pull_request:
+  pull_request_review_comment:
     types:
-      - labeled
+      - created
 
 jobs:
   approve:
@@ -44,8 +44,8 @@ jobs:
 
   merge:
     if: |
-      github.event_name == 'pull_request' &&
-      contains(github.event.pull_request.labels.*.name, 'ready-to-merge')
+      github.event_name == 'pull_request_review_comment' &&
+      github.event.comment.body == '/merge'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v5
@@ -53,8 +53,8 @@ jobs:
           script: |
             await github.rest.checks.create({
               ...context.repo,
-              name: 'merge-bot',
-              head_sha: context.sha,
+              name: 'fast-forward-merge-bot',
+              head_sha: head.sha,
               status: 'completed',
               conclusion: 'success',
             })
@@ -67,11 +67,10 @@ jobs:
                 sha: head.sha,
               })
             } catch (error) {
-              core.error(error)
-              return await github.rest.checks.create({
+              await github.rest.checks.create({
                 ...context.repo,
-                name: 'merge-bot',
-                head_sha: context.sha,
+                name: 'fast-forward-merge-bot',
+                head_sha: head.sha,
                 status: 'completed',
                 conclusion: 'failure',
                 output: {
@@ -79,6 +78,7 @@ jobs:
                   summary: `## :x: Unable to merge\n@${context.actor}\n${String(error)}`,
                 },
               })
+              throw error
             }
             return await github.rest.issues.createComment({
               ...context.repo,
