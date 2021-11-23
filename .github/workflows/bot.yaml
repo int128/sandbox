@@ -42,7 +42,7 @@ jobs:
               await github.rest.checks.create({
                 ...context.repo,
                 name: 'merge-bot',
-                head_sha: pull.head.sha,
+                head_sha: pull.merge_commit_sha,
                 status: 'completed',
                 conclusion: 'success',
               })
@@ -58,7 +58,7 @@ jobs:
               return await github.rest.checks.create({
                 ...context.repo,
                 name: 'merge-bot',
-                head_sha: pull.head.sha,
+                head_sha: pull.merge_commit_sha,
                 status: 'completed',
                 conclusion: 'failure',
                 output: {
