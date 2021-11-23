@@ -1,7 +1,6 @@
 name: bot
 
 on:
-  pull_request:
   issue_comment:
     types:
       - created
@@ -22,23 +21,6 @@ jobs:
               repo: context.issue.repo,
               pull_number: context.issue.number,
               event: 'APPROVE',
-            })
-
-  merge-check:
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/github-script@v5
-        with:
-          script: |
-            await github.rest.checks.create({
-              ...context.repo,
-              name: 'merge-check',
-              head_sha: context.payload.pull_request.head.sha,
-              output: {
-                title: 'Waiting for comment `/merge`',
-                summary: 'To merge the pull request, post a comment `/merge`.',
-              },
             })
 
   merge:
