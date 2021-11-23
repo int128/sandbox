@@ -4,6 +4,9 @@ on:
   issue_comment:
     types:
       - created
+  pull_request:
+    types:
+      - labeled
 
 jobs:
   approve:
@@ -39,66 +42,46 @@ jobs:
               event: 'APPROVE',
             })
 
-  pre-merge:
+  merge:
     if: |
-      github.event.issue.pull_request &&
-      github.event.comment.body == '/merge' &&
-      github.actor == 'int128'
+      github.event_name == 'pull_request' &&
+      contains(github.event.pull_request.labels.*.name, 'ready-to-merge')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v5
         with:
           script: |
-            const { data: pull } = await github.rest.pulls.get({
-              owner: context.issue.owner,
-              repo: context.issue.repo,
-              pull_number: context.issue.number,
-            })
             await github.rest.checks.create({
               ...context.repo,
               name: 'merge-bot',
-              head_sha: pull.merge_commit_sha,
+              head_sha: context.sha,
               status: 'completed',
               conclusion: 'success',
             })
-
-  merge:
-    needs: [pre-merge]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/github-script@v5
-        with:
-          script: |
-            const { data: pull } = await github.rest.pulls.get({
-              owner: context.issue.owner,
-              repo: context.issue.repo,
-              pull_number: context.issue.number,
-            })
+            const { base, head } = context.payload.pull_request
+            core.info(`Updating ${base.ref} to ${head.ref}@${head.sha}`)
             try {
-              core.info(`Updating ${pull.base.ref} to ${pull.head.ref}@${pull.head.sha}`)
               await github.rest.git.updateRef({
-                owner: context.issue.owner,
-                repo: context.issue.repo,
-                ref: `heads/${pull.base.ref}`,
-                sha: pull.head.sha,
+                ...context.repo,
+                ref: `heads/${base.ref}`,
+                sha: head.sha,
               })
             } catch (error) {
               core.error(error)
               return await github.rest.checks.create({
                 ...context.repo,
                 name: 'merge-bot',
-                head_sha: pull.merge_commit_sha,
+                head_sha: context.sha,
                 status: 'completed',
                 conclusion: 'failure',
                 output: {
-                  title: `Error: ${String(error)}`,
+                  title: String(error),
                   summary: `## :x: Unable to merge\n@${context.actor}\n${String(error)}`,
                 },
               })
             }
             return await github.rest.issues.createComment({
-              owner: context.issue.owner,
-              repo: context.issue.repo,
+              ...context.repo,
               issue_number: context.issue.number,
-              body: `Updated ${pull.base.ref} to ${pull.head.sha} by fast-forward on behalf of @${context.actor}`
+              body: `Updated ${base.ref} to ${head.sha} by fast-forward on behalf of @${context.actor}`
             })
