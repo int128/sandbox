@@ -16,19 +16,14 @@ jobs:
       - uses: actions/github-script@v5
         with:
           script: |
-            await github.rest.pulls.createReview({
-              owner: context.issue.owner,
-              repo: context.issue.repo,
-              pull_number: context.issue.number,
-              event: 'APPROVE',
-            })
             const { data: pull } = await github.rest.pulls.get({
               owner: context.issue.owner,
               repo: context.issue.repo,
               pull_number: context.issue.number,
             })
             await github.rest.checks.create({
-              ...context.repo,
+              owner: context.issue.owner,
+              repo: context.issue.repo,
               name: 'approval',
               head_sha: pull.merge_commit_sha,
               conclusion: 'success',
@@ -36,6 +31,12 @@ jobs:
                 title: `Ready to merge`,
                 summary: `Ready to merge`,
               },
+            })
+            await github.rest.pulls.createReview({
+              owner: context.issue.owner,
+              repo: context.issue.repo,
+              pull_number: context.issue.number,
+              event: 'APPROVE',
             })
 
   pre-merge:
