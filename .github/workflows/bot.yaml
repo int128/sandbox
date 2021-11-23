@@ -6,7 +6,7 @@ on:
       - production
   pull_request_review:
     types:
-      - created
+      - submitted
 
 jobs:
   notice:
