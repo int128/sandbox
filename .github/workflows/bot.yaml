@@ -25,7 +25,7 @@ jobs:
               owner: context.issue.owner,
               repo: context.issue.repo,
               name: 'merge-bot',
-              head_sha: pull.merge_commit_sha,
+              head_sha: pull.head.sha,
               conclusion: 'success',
               output: {
                 title: `Ready to merge`,
