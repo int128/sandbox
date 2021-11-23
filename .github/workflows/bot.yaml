@@ -24,7 +24,7 @@ jobs:
               event: 'APPROVE',
             })
 
-  merge-notice:
+  merge-check:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
@@ -33,7 +33,7 @@ jobs:
           script: |
             await github.rest.checks.create({
               ...context.repo,
-              name: 'fast-forward-merge',
+              name: 'merge-check',
               head_sha: context.payload.pull_request.head.sha,
               output: {
                 title: 'Waiting for comment `/merge`',
