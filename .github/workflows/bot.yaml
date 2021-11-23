@@ -1,45 +1,32 @@
 name: bot
 
 on:
-  issue_comment:
+  pull_request:
+    branches:
+      - production
+  pull_request_review:
+    branches:
+      - production
     types:
       - created
-  pull_request_review:
-    types:
-      - submitted
 
 jobs:
-  approve:
-    if: |
-      github.event.issue.pull_request &&
-      github.event.comment.body == '/approve' &&
-      github.actor == 'int128'
+  notice:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v5
         with:
           script: |
-            const { data: pull } = await github.rest.pulls.get({
-              owner: context.issue.owner,
-              repo: context.issue.repo,
-              pull_number: context.issue.number,
-            })
+            const { base, head } = context.payload.pull_request
             await github.rest.checks.create({
-              owner: context.issue.owner,
-              repo: context.issue.repo,
-              name: 'merge-bot',
-              head_sha: pull.head.sha,
-              conclusion: 'success',
+              ...context.repo,
+              name: 'fast-forward-merge-bot',
+              head_sha: head.sha,
               output: {
-                title: `Ready to merge`,
-                summary: `Ready to merge`,
+                title: 'Require approval with comment `/merge`',
+                summary: 'You need to approve this with a comment `/merge`',
               },
-            })
-            await github.rest.pulls.createReview({
-              owner: context.issue.owner,
-              repo: context.issue.repo,
-              pull_number: context.issue.number,
-              event: 'APPROVE',
             })
 
   merge:
