@@ -42,7 +42,7 @@ jobs:
               event: 'APPROVE',
             })
 
-  fast-forward-merge-bot:
+  merge:
     if: |
       github.event_name == 'pull_request_review' &&
       github.event.review.body == '/merge'
@@ -58,10 +58,29 @@ jobs:
               head_sha: head.sha,
               status: 'completed',
               conclusion: 'success',
+              output: {
+                title: `Updating ${base.ref} to ${head.ref}@${head.sha}`,
+                summary: `Updating ${base.ref} to ${head.ref}@${head.sha} on behalf of ${context.actor}`,
+              },
             })
             core.info(`Updating ${base.ref} to ${head.ref}@${head.sha}`)
-            await github.rest.git.updateRef({
-              ...context.repo,
-              ref: `heads/${base.ref}`,
-              sha: head.sha,
-            })
+            try {
+              await github.rest.git.updateRef({
+                ...context.repo,
+                ref: `heads/${base.ref}`,
+                sha: head.sha,
+              })
+            } catch (error) {
+              await github.rest.checks.create({
+                ...context.repo,
+                name: 'fast-forward-merge-bot',
+                head_sha: head.sha,
+                status: 'completed',
+                conclusion: 'failure',
+                output: {
+                  title: String(error),
+                  summary: `## :x: Unable to merge\n@${context.actor}\n${String(error)}`,
+                },
+              })
+              throw error
+            }
