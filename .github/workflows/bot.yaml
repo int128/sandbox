@@ -22,6 +22,22 @@ jobs:
               pull_number: context.issue.number,
               event: 'APPROVE',
             })
+            const { data: pull } = await github.rest.pulls.get({
+              owner: context.issue.owner,
+              repo: context.issue.repo,
+              pull_number: context.issue.number,
+            })
+            await github.rest.checks.create({
+              ...context.repo,
+              name: 'approval',
+              head_sha: pull.merge_commit_sha,
+              status: 'completed',
+              conclusion: 'success',
+              output: {
+                title: `Ready to merge`,
+                summary: `Ready to merge`,
+              },
+            })
 
   pre-merge:
     if: |
