@@ -24,7 +24,7 @@ jobs:
             await github.rest.checks.create({
               owner: context.issue.owner,
               repo: context.issue.repo,
-              name: 'approval',
+              name: 'merge-bot',
               head_sha: pull.merge_commit_sha,
               conclusion: 'failure',
               output: {
