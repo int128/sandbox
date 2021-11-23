@@ -1,15 +1,15 @@
 name: bot
 
 on:
-  pull_request:
-    branches:
-      - production
   pull_request_review:
     types:
       - submitted
 
 jobs:
   notice:
+    if: |
+      github.event.review.state == 'APPROVED' &&
+      github.event.review.body != '/merge'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v5
@@ -20,15 +20,15 @@ jobs:
               ...context.repo,
               name: 'fast-forward-merge-bot',
               head_sha: head.sha,
+              conclusion: 'failure',
               output: {
-                title: 'Require approval with comment `/merge`',
-                summary: 'You need to approve this with a comment `/merge`',
+                title: 'Require review comment `/merge`',
+                summary: 'To merge this pull request, approve it with a comment `/merge`',
               },
             })
 
   merge:
     if: |
-      github.event_name == 'pull_request_review' &&
       github.event.review.state == 'APPROVED' &&
       github.event.review.body == '/merge'
     runs-on: ubuntu-latest
