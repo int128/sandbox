@@ -12,8 +12,14 @@ jobs:
       github.event.review.body != '/merge'
     runs-on: ubuntu-latest
     steps:
+      - uses: cybozu/octoken-action@v1
+        id: octoken
+        with:
+          github_app_id: ${{ secrets.APP_ID }}
+          github_app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
       - uses: actions/github-script@v5
         with:
+          github-token: ${{ steps.octoken.outputs.token }}
           script: |
             const { base, head } = context.payload.pull_request
             await github.rest.checks.create({
