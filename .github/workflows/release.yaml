@@ -14,6 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: gh pr create --base ${{ github.event.inputs.base }} --head master --title Release --body "@${{ github.actor }}" --draft
+      - run: |
+          gh pr create \
+            --base ${{ github.event.inputs.base }} \
+            --head master \
+            --title "Release ${{ github.event.inputs.base }}" \
+            --body "@${{ github.actor }}" \
+            --draft
         env:
           GITHUB_TOKEN: ${{ github.token }}
