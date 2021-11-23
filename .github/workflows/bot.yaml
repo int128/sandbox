@@ -12,7 +12,6 @@ on:
 
 jobs:
   notice:
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v5
@@ -44,7 +43,6 @@ jobs:
               ...context.repo,
               name: 'fast-forward-merge-bot',
               head_sha: head.sha,
-              status: 'completed',
               conclusion: 'success',
             })
       - uses: actions/github-script@v5
@@ -65,6 +63,5 @@ jobs:
               ...context.repo,
               name: 'fast-forward-merge-bot',
               head_sha: head.sha,
-              status: 'completed',
               conclusion: 'failure',
             })
