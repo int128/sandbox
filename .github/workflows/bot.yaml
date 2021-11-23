@@ -4,9 +4,9 @@ on:
   issue_comment:
     types:
       - created
-  pull_request_review_comment:
+  pull_request_review:
     types:
-      - created
+      - submitted
 
 jobs:
   approve:
@@ -44,8 +44,8 @@ jobs:
 
   merge:
     if: |
-      github.event_name == 'pull_request_review_comment' &&
-      github.event.comment.body == '/merge'
+      github.event_name == 'pull_request_review' &&
+      github.event.review.body == '/merge'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v5
