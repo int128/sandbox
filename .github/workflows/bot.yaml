@@ -31,7 +31,6 @@ jobs:
               ...context.repo,
               name: 'approval',
               head_sha: pull.merge_commit_sha,
-              status: 'completed',
               conclusion: 'success',
               output: {
                 title: `Ready to merge`,
