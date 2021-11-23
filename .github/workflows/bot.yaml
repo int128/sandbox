@@ -22,6 +22,7 @@ jobs:
               ...context.repo,
               name: 'fast-forward-merge-bot',
               head_sha: head.sha,
+              conclusion: 'failure',
               output: {
                 title: 'Require approval with comment `/merge`',
                 summary: 'You need to approve this with a comment `/merge`',
