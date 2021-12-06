@@ -8,6 +8,7 @@ on:
 jobs:
   approve:
     if: |
+      github.actor == 'int128' &&
       github.event.issue.pull_request &&
       github.event.comment.body == '/approve'
     runs-on: ubuntu-latest
@@ -23,6 +24,7 @@ jobs:
 
   merge:
     if: |
+      github.actor == 'int128' &&
       github.event.issue.pull_request &&
       github.event.comment.body == '/merge'
     runs-on: ubuntu-latest
