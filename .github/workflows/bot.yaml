@@ -1,71 +1,44 @@
 name: bot
 
 on:
-  pull_request_review:
+  issue_comment:
     types:
-      - submitted
+      - created
 
 jobs:
-  notice:
-    if: |
-      github.event.review.state == 'APPROVED' &&
-      github.event.review.body != '/merge'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: cybozu/octoken-action@v1
-        id: octoken
-        with:
-          github_app_id: ${{ secrets.APP_ID }}
-          github_app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
-      - uses: actions/github-script@v5
-        with:
-          github-token: ${{ steps.octoken.outputs.token }}
-          script: |
-            const { base, head } = context.payload.pull_request
-            await github.rest.checks.create({
-              ...context.repo,
-              name: 'fast-forward-merge-bot',
-              head_sha: head.sha,
-              conclusion: 'failure',
-              output: {
-                title: 'Require review comment `/merge`',
-                summary: 'To merge this pull request, approve it with a comment `/merge`',
-              },
-            })
-
   merge:
     if: |
-      github.event.review.state == 'APPROVED' &&
-      github.event.review.body == '/merge'
+      github.event.issue.pull_request &&
+      github.event.comment.body == '/merge'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v5
         with:
           script: |
-            const { base, head } = context.payload.pull_request
+            const { data: pull } = await github.rest.pulls.get({
+              ...context.repo,
+              pull_number: context.issue.number,
+            })
             await github.rest.checks.create({
               ...context.repo,
               name: 'fast-forward-merge-bot',
-              head_sha: head.sha,
+              head_sha: pull.head.sha,
               conclusion: 'success',
             })
-      - uses: actions/github-script@v5
-        with:
-          script: |
-            const { base, head } = context.payload.pull_request
-            await github.rest.git.updateRef({
-              ...context.repo,
-              ref: `heads/${base.ref}`,
-              sha: head.sha,
-            })
-      - if: failure()
-        uses: actions/github-script@v5
-        with:
-          script: |
-            const { base, head } = context.payload.pull_request
-            await github.rest.checks.create({
-              ...context.repo,
-              name: 'fast-forward-merge-bot',
-              head_sha: head.sha,
-              conclusion: 'failure',
-            })
+            core.info(`updating ref ${pull.base.ref} to sha ${pull.head.sha}`)
+            try {
+              await github.rest.git.updateRef({
+                ...context.repo,
+                ref: `heads/${pull.base.ref}`,
+                sha: pull.head.sha,
+              })
+            } catch (error) {
+              core.error(error)
+              await github.rest.checks.create({
+                ...context.repo,
+                name: 'fast-forward-merge-bot',
+                head_sha: pull.head.sha,
+                conclusion: 'failure',
+                description: String(error),
+              })
+            }
