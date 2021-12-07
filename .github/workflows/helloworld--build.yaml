@@ -79,6 +79,7 @@ jobs:
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           cache: true
+          verbosity: debug
 
       - run: docker run --rm ghcr.io/${{ github.repository }}/helloworld/kaniko@${{ steps.build.outputs.digest }} cat /etc/os-release
       - run: docker run --rm ghcr.io/${{ github.repository }}/helloworld/kaniko@${{ steps.build.outputs.digest }} cat /etc/os-release.build
