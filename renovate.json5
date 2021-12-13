@@ -14,5 +14,14 @@
       ],
       "datasourceTemplate": "docker",
     },
+    {
+      "fileMatch": ["action\\.yaml"],
+      "matchStrings": [
+        "using: '(?<currentValue>\d+)'\\n",
+      ],
+      "versioningTemplate": "regex:^node(?<major>\\d+)$",
+      "datasourceTemplate": "node",
+      "depNameTemplate": "node",
+    },
   ],
 }
