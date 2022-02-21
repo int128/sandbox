@@ -19,23 +19,26 @@ jobs:
         id: config
         with:
           script: |
-            core.info(JSON.stringify(context.payload, undefined, 2))
+            core.setOutput('base', context.payload.inputs.environment)
+            core.setOutput('head', 'master')
 
       - uses: int128/release-note-action@v0
         id: release-note
         with:
-          base: refs/heads/${{ github.event.inputs.environment }}
-          head: refs/heads/master
+          base: refs/heads/${{ steps.config.outputs.base }}
+          head: refs/heads/${{ steps.config.outputs.head }}
 
       - uses: actions/github-script@v6
         env:
+          base: ${{ steps.config.outputs.base }}
+          head: ${{ steps.config.outputs.head }}
           body: ${{ steps.release-note.outputs.pull-request-list-markdown }}
         with:
           script: |
             const { data: pull } = await github.rest.pulls.create({
               ...context.repo,
-              base: context.payload.inputs.environment,
-              head: 'master',
+              base: process.env.base,
+              head: process.env.head,
               title: `Deploy to ${context.payload.inputs.environment}`,
               body: process.env.body,
             })
@@ -44,7 +47,7 @@ jobs:
               pull_number: pull.number,
               reviewers: [context.actor],
             })
-            await octokit.rest.issues.addAssignees({
+            await github.rest.issues.addAssignees({
               ...context.repo,
               issue_number: pull.number,
               assignees: [context.actor],
