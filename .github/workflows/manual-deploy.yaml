@@ -36,6 +36,7 @@ jobs:
               ...context.repo,
               base: context.payload.inputs.environment,
               head: 'master',
+              title: `Deploy to ${context.payload.inputs.environment}`,
               body: process.env.body,
             })
             await github.rest.pulls.requestReviewers({
