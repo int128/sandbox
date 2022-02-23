@@ -32,7 +32,9 @@ jobs:
         env:
           base: ${{ steps.config.outputs.base }}
           head: ${{ steps.config.outputs.head }}
-          body: ${{ steps.release-note.outputs.pull-request-list-markdown }}
+          body: |
+            ## Release note
+            ${{ steps.release-note.outputs.body }}
         with:
           script: |
             const { data: pull } = await github.rest.pulls.create({
