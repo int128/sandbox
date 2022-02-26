@@ -9,4 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - run: env
+      - uses: actions/github@v6
+        with:
+          script: |
+            core.info(JSON.stringify(context, undefined, 2))
