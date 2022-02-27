@@ -12,12 +12,13 @@ jobs:
         with:
           script: |
             const sleep = (ms) => new Promise(rs => setTimeout(rs, ms))
+            const head_sha = context.payload.pull_request?.head?.sha ?? github.sha
 
             const { data: check } = await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               name: 'argocd--frontend',
-              head_sha: context.payload.pull_request.head.sha,
+              head_sha,
               output: {
                 title: 'Pushed a manifest',
                 summary: 'Pushed a manifest into https://github.com/int128/sandbox',
