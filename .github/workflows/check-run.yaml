@@ -55,3 +55,32 @@ jobs:
             })
             core.info(`updated check run ${check.url}`)
             await sleep(3000)
+
+            await github.rest.checks.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              check_run_id: check.id,
+              status: 'in_progress',
+              details_url: `https://argocd.example.com/pull-request-${context.issue.number}`,
+              output: {
+                title: 'Progressing',
+                summary: 'Progressing for https://github.com/int128/sandbox',
+              },
+            })
+            core.info(`updated check run ${check.url}`)
+            await sleep(3000)
+
+            await github.rest.checks.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              check_run_id: check.id,
+              status: 'completed',
+              conclusion: 'success',
+              details_url: `https://argocd.example.com/pull-request-${context.issue.number}`,
+              output: {
+                title: 'Healthy',
+                summary: 'Healthy by https://github.com/int128/sandbox',
+              },
+            })
+            core.info(`updated check run ${check.url}`)
+            await sleep(3000)
