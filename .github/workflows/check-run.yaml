@@ -28,6 +28,7 @@ jobs:
               status: 'in_progress',
               details_url: `https://argocd.example.com/pull-request-${context.issue.number}`,
             })
+            core.info(`updated check run ${check.url}`)
             await sleep(3000)
 
             await github.rest.checks.update({
@@ -37,4 +38,5 @@ jobs:
               status: 'completed',
               details_url: `https://argocd.example.com/pull-request-${context.issue.number}`,
             })
+            core.info(`updated check run ${check.url}`)
             await sleep(3000)
