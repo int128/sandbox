@@ -17,6 +17,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               name: 'argocd--frontend',
+              head_sha: context.sha,
             })
             core.info(JSON.stringify(check, undefined, 2))
             await sleep(3000)
