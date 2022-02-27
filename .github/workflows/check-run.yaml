@@ -19,7 +19,8 @@ jobs:
               name: 'argocd--frontend',
               head_sha: context.payload.pull_request.head.sha,
               output: {
-                title: 'pushed a manifest',
+                title: 'Pushed a manifest',
+                summary: 'Pushed a manifest into https://github.com/int128/sandbox',
               },
             })
             core.info(JSON.stringify(check, undefined, 2))
@@ -32,7 +33,8 @@ jobs:
               status: 'in_progress',
               details_url: `https://argocd.example.com/pull-request-${context.issue.number}`,
               output: {
-                title: 'syncing',
+                title: 'Syncing',
+                summary: 'Syncing from https://github.com/int128/sandbox',
               },
             })
             core.info(`updated check run ${check.url}`)
@@ -46,7 +48,8 @@ jobs:
               conclusion: 'success',
               details_url: `https://argocd.example.com/pull-request-${context.issue.number}`,
               output: {
-                title: 'healthy',
+                title: 'Healthy',
+                summary: 'Successfully deployed',
               },
             })
             core.info(`updated check run ${check.url}`)
