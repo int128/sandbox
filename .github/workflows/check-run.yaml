@@ -18,6 +18,9 @@ jobs:
               repo: context.repo.repo,
               name: 'argocd--frontend',
               head_sha: context.payload.pull_request.head.sha,
+              output: {
+                title: 'pushed a manifest',
+              },
             })
             core.info(JSON.stringify(check, undefined, 2))
             await sleep(3000)
@@ -28,6 +31,9 @@ jobs:
               check_run_id: check.id,
               status: 'in_progress',
               details_url: `https://argocd.example.com/pull-request-${context.issue.number}`,
+              output: {
+                title: 'syncing',
+              },
             })
             core.info(`updated check run ${check.url}`)
             await sleep(3000)
@@ -37,7 +43,11 @@ jobs:
               repo: context.repo.repo,
               check_run_id: check.id,
               status: 'completed',
+              conclusion: 'success',
               details_url: `https://argocd.example.com/pull-request-${context.issue.number}`,
+              output: {
+                title: 'healthy',
+              },
             })
             core.info(`updated check run ${check.url}`)
             await sleep(3000)
