@@ -74,6 +74,7 @@ jobs:
       - id: build
         uses: int128/kaniko-action@v1
         with:
+          executor: gcr.io/kaniko-project/executor:v1.8.0
           context: helloworld
           push: true
           tags: ${{ steps.metadata.outputs.tags }}
