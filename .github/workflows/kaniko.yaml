@@ -12,9 +12,8 @@ jobs:
       - uses: actions/checkout@v3
       - run: |
           docker run --rm \
-            -v /home/runner/work/sandbox/sandbox/helloworld:/kaniko/action/context:ro \
+            -v $(pwd)/helloworld:/workspace:ro \
             gcr.io/kaniko-project/executor:v1.8.0 \
-            --context dir:///kaniko/action/context/ \
-            --digest-file /kaniko/action/output/digest \
+            --context dir:///workspace/ \
             --no-push \
             --verbosity debug
