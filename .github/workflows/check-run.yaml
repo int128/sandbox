@@ -12,11 +12,17 @@ jobs:
         with:
           script: |
             const sleep = (ms) => new Promise(rs => setTimeout(rs, ms))
+            const head_sha = context.payload.pull_request?.head?.sha ?? github.sha
 
             const { data: check } = await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               name: 'argocd--frontend',
+              head_sha,
+              output: {
+                title: 'Pushed a manifest',
+                summary: 'Pushed a manifest into https://github.com/int128/sandbox',
+              },
             })
             core.info(JSON.stringify(check, undefined, 2))
             await sleep(3000)
@@ -27,7 +33,12 @@ jobs:
               check_run_id: check.id,
               status: 'in_progress',
               details_url: `https://argocd.example.com/pull-request-${context.issue.number}`,
+              output: {
+                title: 'Syncing',
+                summary: 'Syncing from https://github.com/int128/sandbox',
+              },
             })
+            core.info(`updated check run ${check.url}`)
             await sleep(3000)
 
             await github.rest.checks.update({
@@ -35,6 +46,41 @@ jobs:
               repo: context.repo.repo,
               check_run_id: check.id,
               status: 'completed',
+              conclusion: 'success',
               details_url: `https://argocd.example.com/pull-request-${context.issue.number}`,
+              output: {
+                title: 'Healthy',
+                summary: 'Successfully deployed',
+              },
             })
+            core.info(`updated check run ${check.url}`)
+            await sleep(3000)
+
+            await github.rest.checks.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              check_run_id: check.id,
+              status: 'in_progress',
+              details_url: `https://argocd.example.com/pull-request-${context.issue.number}`,
+              output: {
+                title: 'Progressing',
+                summary: 'Progressing for https://github.com/int128/sandbox',
+              },
+            })
+            core.info(`updated check run ${check.url}`)
+            await sleep(3000)
+
+            await github.rest.checks.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              check_run_id: check.id,
+              status: 'completed',
+              conclusion: 'success',
+              details_url: `https://argocd.example.com/pull-request-${context.issue.number}`,
+              output: {
+                title: 'Healthy',
+                summary: 'Healthy by https://github.com/int128/sandbox',
+              },
+            })
+            core.info(`updated check run ${check.url}`)
             await sleep(3000)
