@@ -1,0 +1,20 @@
+name: kaniko
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+        docker run --rm \
+          -v /home/runner/work/sandbox/sandbox/helloworld:/kaniko/action/context:ro \
+          gcr.io/kaniko-project/executor:v1.8.0 \
+          --context dir:///kaniko/action/context/ \
+          --digest-file /kaniko/action/output/digest \
+          --no-push \
+          --verbosity debug
