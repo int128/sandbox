@@ -3,6 +3,8 @@ name: check-run
 on:
   pull_request:
     branches: master
+    paths:
+      - .github/workflows/check-run.yaml
 
 jobs:
   deploy:
