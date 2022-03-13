@@ -10,11 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - env:
-          container: docker
-        run: |
+      - run: |
           docker run --rm \
             -v $(pwd)/helloworld:/workspace:ro \
+            -e container=docker \
             gcr.io/kaniko-project/executor:v1.8.0 \
             --context dir:///workspace/ \
             --no-push \
