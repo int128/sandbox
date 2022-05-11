@@ -8,5 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Adding markdown
-        run: echo '### Hello world! :rocket:' >> $GITHUB_STEP_SUMMARY
+      - run: |
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          ### Hello world! :rocket:
+          https://github.com/int128/sandbox/pull/168
+          EOF
