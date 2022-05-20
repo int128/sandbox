@@ -1,4 +1,4 @@
-FROM debian:stretch AS builder
+FROM debian:bullseye AS builder
 
 FROM builder
 
