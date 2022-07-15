@@ -1,0 +1,10 @@
+name: reusable
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/reusable.yaml
+
+jobs:
+  call:
+    uses: .github/workflows/helloworld--build.yaml
