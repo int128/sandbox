@@ -15,6 +15,7 @@ on:
       - helloworld/**
     tags:
       - helloworld/v*
+  workflow_call:
 
 jobs:
   docker:
