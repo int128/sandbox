@@ -22,7 +22,7 @@ jobs:
             core.setOutput('base', context.payload.inputs.environment)
             core.setOutput('head', 'master')
 
-      - uses: int128/release-note-action@v0
+      - uses: int128/release-note-action@v1
         id: release-note
         with:
           base: refs/heads/${{ steps.config.outputs.base }}
