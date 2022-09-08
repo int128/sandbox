@@ -1,6 +1,7 @@
 name: dump-workflow-run
 
 on:
+  workflow_call:
   workflow_run:
     workflows:
       - '*'
