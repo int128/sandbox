@@ -2,6 +2,10 @@ name: dump-workflow-run
 
 on:
   workflow_call:
+    inputs:
+      target:
+        type: string
+        description: target name (optional)
   workflow_run:
     workflows:
       - '*'
