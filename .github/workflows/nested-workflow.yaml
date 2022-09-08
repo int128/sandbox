@@ -1,0 +1,16 @@
+name: nested-workflow
+
+on:
+  pull_request:
+
+jobs:
+  dump:
+    strategy:
+      matrix:
+        target:
+          - service-a
+          - service-b
+          - service-c
+    uses: ./.github/workflows/dump-workflow-run.yaml
+    with:
+      target: ${{ matrix.target }}
