@@ -8,32 +8,7 @@ jobs:
     strategy:
       matrix:
         target:
-          - service-a
-          - service-b
-          - service-c
-          - service-d
-          - service-e
-          - service-f
-          - service-g
-          - service-h
-          - service-i
-          - service-j
-          - service-k
-          - service-l
-          - service-m
-          - service-n
-          - service-o
-          - service-p
-          - service-q
-          - service-r
-          - service-s
-          - service-t
-          - service-u
-          - service-v
-          - service-w
-          - service-x
-          - service-y
-          - service-z
-    uses: ./.github/workflows/dump-workflow-run.yaml
+          - dump-workflow-run
+    uses: ./.github/workflows/${{ matrix.target }}.yaml
     with:
       target: ${{ matrix.target }}
