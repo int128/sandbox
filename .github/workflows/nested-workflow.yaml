@@ -6,53 +6,79 @@ on:
 jobs:
   a:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   b:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   c:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   d:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   e:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   f:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   g:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   h:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   i:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   j:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   k:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   l:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   m:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   n:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   o:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   p:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   q:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   r:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   s:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   t:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   u:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   v:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   w:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   x:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   y:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
   z:
     uses: ./.github/workflows/dump-workflow-run.yaml
+    secrets: inherit
