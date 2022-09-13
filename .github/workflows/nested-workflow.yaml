@@ -1,7 +1,9 @@
 name: nested-workflow
 
 on:
-  pull_request:
+  push:
+    branches:
+      - int128-patch-11
 
 jobs:
   a:
