@@ -4,36 +4,55 @@ on:
   pull_request:
 
 jobs:
-  dump:
-    strategy:
-      matrix:
-        target:
-          - service-a
-          - service-b
-          - service-c
-          - service-d
-          - service-e
-          - service-f
-          - service-g
-          - service-h
-          - service-i
-          - service-j
-          - service-k
-          - service-l
-          - service-m
-          - service-n
-          - service-o
-          - service-p
-          - service-q
-          - service-r
-          - service-s
-          - service-t
-          - service-u
-          - service-v
-          - service-w
-          - service-x
-          - service-y
-          - service-z
+  a:
     uses: ./.github/workflows/dump-workflow-run.yaml
-    with:
-      target: ${{ matrix.target }}
+  b:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  c:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  d:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  e:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  f:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  g:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  h:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  i:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  j:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  k:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  l:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  m:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  n:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  o:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  p:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  q:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  r:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  s:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  t:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  u:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  v:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  w:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  x:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  y:
+    uses: ./.github/workflows/dump-workflow-run.yaml
+  z:
+    uses: ./.github/workflows/dump-workflow-run.yaml
