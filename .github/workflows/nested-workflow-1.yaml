@@ -1,7 +1,7 @@
 name: nested-workflow-1
 
 on:
-  pull_request:
+  workflow_call:
 
 jobs:
   a:
