@@ -1,0 +1,27 @@
+name: nested-workflow-1
+
+on:
+  pull_request:
+
+jobs:
+  a:
+    uses: ./.github/workflows/dump-workflow-run-a.yaml
+    secrets: inherit
+  b:
+    uses: ./.github/workflows/dump-workflow-run-b.yaml
+    secrets: inherit
+  c:
+    uses: ./.github/workflows/dump-workflow-run-c.yaml
+    secrets: inherit
+  d:
+    uses: ./.github/workflows/dump-workflow-run-d.yaml
+    secrets: inherit
+  e:
+    uses: ./.github/workflows/dump-workflow-run-e.yaml
+    secrets: inherit
+  f:
+    uses: ./.github/workflows/dump-workflow-run-f.yaml
+    secrets: inherit
+  g:
+    uses: ./.github/workflows/dump-workflow-run-g.yaml
+    secrets: inherit

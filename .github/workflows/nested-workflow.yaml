@@ -4,81 +4,12 @@ on:
   pull_request:
 
 jobs:
-  a:
-    uses: ./.github/workflows/dump-workflow-run-a.yaml
+  via-1:
+    uses: ./.github/workflows/nested-workflow-1.yaml
     secrets: inherit
-  b:
-    uses: ./.github/workflows/dump-workflow-run-b.yaml
+  via-2:
+    uses: ./.github/workflows/nested-workflow-2.yaml
     secrets: inherit
-  c:
-    uses: ./.github/workflows/dump-workflow-run-c.yaml
-    secrets: inherit
-  d:
-    uses: ./.github/workflows/dump-workflow-run-d.yaml
-    secrets: inherit
-  e:
-    uses: ./.github/workflows/dump-workflow-run-e.yaml
-    secrets: inherit
-  f:
-    uses: ./.github/workflows/dump-workflow-run-f.yaml
-    secrets: inherit
-  g:
-    uses: ./.github/workflows/dump-workflow-run-g.yaml
-    secrets: inherit
-  h:
-    uses: ./.github/workflows/dump-workflow-run-h.yaml
-    secrets: inherit
-  i:
-    uses: ./.github/workflows/dump-workflow-run-i.yaml
-    secrets: inherit
-  j:
-    uses: ./.github/workflows/dump-workflow-run-j.yaml
-    secrets: inherit
-  k:
-    uses: ./.github/workflows/dump-workflow-run-k.yaml
-    secrets: inherit
-  l:
-    uses: ./.github/workflows/dump-workflow-run-l.yaml
-    secrets: inherit
-  m:
-    uses: ./.github/workflows/dump-workflow-run-m.yaml
-    secrets: inherit
-  n:
-    uses: ./.github/workflows/dump-workflow-run-n.yaml
-    secrets: inherit
-  o:
-    uses: ./.github/workflows/dump-workflow-run-o.yaml
-    secrets: inherit
-  p:
-    uses: ./.github/workflows/dump-workflow-run-p.yaml
-    secrets: inherit
-  q:
-    uses: ./.github/workflows/dump-workflow-run-q.yaml
-    secrets: inherit
-  r:
-    uses: ./.github/workflows/dump-workflow-run-r.yaml
-    secrets: inherit
-  s:
-    uses: ./.github/workflows/dump-workflow-run-s.yaml
-    secrets: inherit
-  t:
-    uses: ./.github/workflows/dump-workflow-run-t.yaml
-    secrets: inherit
-  u:
-    uses: ./.github/workflows/dump-workflow-run-u.yaml
-    secrets: inherit
-  v:
-    uses: ./.github/workflows/dump-workflow-run-v.yaml
-    secrets: inherit
-  w:
-    uses: ./.github/workflows/dump-workflow-run-w.yaml
-    secrets: inherit
-  x:
-    uses: ./.github/workflows/dump-workflow-run-x.yaml
-    secrets: inherit
-  y:
-    uses: ./.github/workflows/dump-workflow-run-y.yaml
-    secrets: inherit
-  z:
-    uses: ./.github/workflows/dump-workflow-run-z.yaml
+  via-3:
+    uses: ./.github/workflows/nested-workflow-3.yaml
     secrets: inherit
