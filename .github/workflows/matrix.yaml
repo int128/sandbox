@@ -13,7 +13,6 @@ jobs:
           - amd64
           - arm64
           - ppc64le
-    output:
     steps:
       - uses: actions/github-script@v6
         id: script
