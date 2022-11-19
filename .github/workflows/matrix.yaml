@@ -1,0 +1,31 @@
+name: matrix
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - amd64
+          - arm64
+          - ppc64le
+    output:
+    steps:
+      - uses: actions/github-script@v6
+        id: script
+        with:
+          result-encoding: string
+          script: return "Hello ${{ matrix.platform }}"
+    outputs:
+      result: ${{ steps.script.outputs.result }}
+
+  aggregate:
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo '${{ toJSON(needs.build.outputs.result) }}'
