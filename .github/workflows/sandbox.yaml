@@ -1,0 +1,13 @@
+name: sandbox
+
+on:
+  pull_request:
+
+jobs:
+  foo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            core.info(await github.rest.users.getAuthenticated())
