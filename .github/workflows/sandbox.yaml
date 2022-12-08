@@ -10,4 +10,4 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            core.info(await github.rest.apps.getAuthenticated()
+            core.info(await github.rest.apps.getAuthenticated())
