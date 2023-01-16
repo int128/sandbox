@@ -7,4 +7,4 @@ jobs:
   server:
     runs-on: ubuntu-latest
     steps:
-      - run: sudo /usr/sbin/sshd -D -e
+      - run: ssh -v localhost
