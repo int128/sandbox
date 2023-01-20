@@ -7,4 +7,4 @@ jobs:
   server:
     runs-on: ubuntu-latest
     steps:
-      - run: ssh -v localhost
+      - run: ssh -v -o StrictHostKeyChecking=accept-new localhost
