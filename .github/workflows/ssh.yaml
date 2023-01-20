@@ -12,4 +12,4 @@ jobs:
       - run: chmod 600 ~/.ssh/authorized_keys
       - run: ssh -v -o StrictHostKeyChecking=accept-new localhost env
       - if: always()
-        run: sudo journalctl -u sshd.service
+        run: sudo journalctl
