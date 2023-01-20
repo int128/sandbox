@@ -7,6 +7,6 @@ jobs:
   server:
     runs-on: ubuntu-latest
     steps:
-      - run: ssh-keygen -N ''
+      - run: ssh-keygen -t ed25519 -N '' -f ~/.ssh/id_ed25519.pub
       - run: cp ~/.ssh/id_ed25519.pub ~/.ssh/authorized_keys
-      - run: ssh -v -o StrictHostKeyChecking=accept-new localhost
+      - run: ssh -v -o StrictHostKeyChecking=accept-new localhost env
