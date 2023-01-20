@@ -7,8 +7,9 @@ jobs:
   server:
     runs-on: ubuntu-latest
     steps:
-      - run: sudo cat /etc/ssh/sshd_config.d/*.conf
       - run: ssh-keygen -t ed25519 -N '' -f ~/.ssh/id_ed25519.pub
       - run: cp ~/.ssh/id_ed25519.pub ~/.ssh/authorized_keys
       - run: chmod 600 ~/.ssh/authorized_keys
       - run: ssh -v -o StrictHostKeyChecking=accept-new localhost env
+      - if: always()
+        run: sudo journalctl -u sshd.service
