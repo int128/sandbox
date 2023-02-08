@@ -1,0 +1,13 @@
+name: pull-request-label
+
+on:
+  pull_request:
+    types:
+      - labeled
+
+jobs:
+  example:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
