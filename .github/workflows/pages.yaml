@@ -2,15 +2,11 @@ name: pages
 
 on:
   push:
-    branches: ["master"]
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+    branches:
+      - master
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: true
 
 jobs:
@@ -18,7 +14,12 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v3
       - uses: actions/configure-pages@v3
