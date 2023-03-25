@@ -1,0 +1,16 @@
+name: pr-expression
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/pr-expression.yaml
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - run: echo '${{ github.event.pull_request.number && format('pr-{0}', github.event.pull_request.number) || github.ref_name }}'
