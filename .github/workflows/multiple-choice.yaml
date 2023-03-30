@@ -1,0 +1,29 @@
+name: multiple-choice
+
+on:
+  workflow_dispatch:
+    inputs:
+      service_a:
+        type: boolean
+        required: true
+        description: Deploy a
+      service_b:
+        type: boolean
+        required: true
+        description: Deploy b
+      service_c:
+        type: boolean
+        required: true
+        description: Deploy c
+
+jobs:
+  show:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - run: echo '$services'
+        env:
+          services: |
+            ${{ inputs.service_a }}
+            ${{ inputs.service_b }}
+            ${{ inputs.service_c }}
