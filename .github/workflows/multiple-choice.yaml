@@ -21,9 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - run: echo '$services'
-        env:
-          services: |
-            ${{ inputs.service_a }}
-            ${{ inputs.service_b }}
-            ${{ inputs.service_c }}
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            core.info(JSON.stringify(context))
