@@ -9,6 +9,6 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v3
-      # update everytime
+      # to be updated everytime
       - run: date > timestamp
       - uses: int128/update-generated-files-action@v2
