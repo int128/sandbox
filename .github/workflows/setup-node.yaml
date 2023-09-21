@@ -1,0 +1,13 @@
+name: setup-node
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 10.16.3
+      - run: node -v
