@@ -1,0 +1,10 @@
+name: test
+
+on:
+  pull_request:
+
+jobs:
+  show-runner-tool-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - run: ls -lR "$RUNNER_TOOL_CACHE"
