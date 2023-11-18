@@ -1,0 +1,14 @@
+name: test
+
+on:
+  pull_request:
+
+jobs:
+  do:
+    runs-on: ubuntu-latest
+    steps:
+      - id: config
+        run: |
+          echo 'data={"foo": "bar"}' >> "$GITHUB_OUTPUT"
+      - run: env
+        env: ${{ fromJson(steps.config.outputs.data) }}
