@@ -2,12 +2,15 @@ name: sandbox
 
 on:
   pull_request:
+    paths:
+      - .github/workflows/sandbox.yml
 
 jobs:
   do:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           cat >> $GITHUB_STEP_SUMMARY << EOF
           ### Hello world! :rocket:
