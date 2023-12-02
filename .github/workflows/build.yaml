@@ -1,15 +1,15 @@
-name: helloworld--build
+name: build
 
 on:
   pull_request:
     branches:
-      - master
+      - main
     paths:
       - .github/workflows/helloworld--build.yaml
       - helloworld/**
   push:
     branches:
-      - master
+      - main
     paths:
       - .github/workflows/helloworld--build.yaml
       - helloworld/**
@@ -20,6 +20,7 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v2
       - uses: docker/metadata-action@v3
@@ -54,6 +55,7 @@ jobs:
 
   kaniko:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v2
       - uses: docker/metadata-action@v3
