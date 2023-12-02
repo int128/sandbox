@@ -49,6 +49,9 @@ jobs:
           labels: ${{ steps.metadata.outputs.labels }}
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/helloworld:cache
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/helloworld:cache,mode=max
+          build-args: |
+            foo=aaa
+            BAR=bbb
 
       - run: docker run --rm ghcr.io/${{ github.repository }}/helloworld@${{ steps.build.outputs.digest }} cat /etc/os-release
       - run: docker run --rm ghcr.io/${{ github.repository }}/helloworld@${{ steps.build.outputs.digest }} cat /etc/os-release.build
@@ -82,6 +85,9 @@ jobs:
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           cache: true
+          build-args: |
+            foo=aaa
+            BAR=bbb
 
       - run: docker run --rm ghcr.io/${{ github.repository }}/helloworld/kaniko@${{ steps.build.outputs.digest }} cat /etc/os-release
       - run: docker run --rm ghcr.io/${{ github.repository }}/helloworld/kaniko@${{ steps.build.outputs.digest }} cat /etc/os-release.build
