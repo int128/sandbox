@@ -3,7 +3,7 @@ name: sandbox
 on:
   pull_request:
     paths:
-      - .github/workflows/sandbox.yml
+      - .github/workflows/sandbox.yaml
 
 jobs:
   do:
