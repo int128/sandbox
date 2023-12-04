@@ -45,6 +45,7 @@ jobs:
         with:
           context: helloworld
           push: true
+          provenance: false
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/helloworld:cache
