@@ -47,7 +47,7 @@ jobs:
           push: true
           provenance: false
           tags: ${{ steps.metadata.outputs.tags }}
-          labels: ${{ steps.metadata.outputs.labels }}
+          # labels: ${{ steps.metadata.outputs.labels }}
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/helloworld:cache
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/helloworld:cache,mode=max
 
