@@ -9,5 +9,8 @@ jobs:
   do:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    environment:
+      name: staging
+      url: https://staging.example.com
     steps:
       - uses: actions/checkout@v4
