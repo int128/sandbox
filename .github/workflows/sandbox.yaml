@@ -18,6 +18,6 @@ jobs:
           POSTGRES_DB: sandbox
     steps:
       - uses: actions/checkout@v4
-      - run: psql -U sandbox -h db postgres -c 'SHOW max_connections;'
+      - run: psql -U sandbox -h localhost postgres -c 'SHOW max_connections;'
         env:
           PGPASSWORD: sandbox
