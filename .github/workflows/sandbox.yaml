@@ -9,5 +9,15 @@ jobs:
   do:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    services:
+      db:
+        image: postgres:15
+        env:
+          POSTGRES_USER: sandbox
+          POSTGRES_PASSWORD: sandbox
+          POSTGRES_DB: sandbox
     steps:
       - uses: actions/checkout@v4
+      - run: psql -U sandbox db -c 'SHOW max_connections;'
+        env:
+          PGPASSWORD: sandbox
