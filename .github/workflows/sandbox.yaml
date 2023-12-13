@@ -18,7 +18,7 @@ jobs:
           POSTGRES_USER: sandbox
           POSTGRES_PASSWORD: sandbox
           POSTGRES_DB: sandbox
-        options: '-c max_connections=200'
+        options: --entrypoint 'postgres -c max_connections=200'
     steps:
       - uses: actions/checkout@v4
       - run: psql -U sandbox -h localhost postgres -c 'SHOW max_connections;'
