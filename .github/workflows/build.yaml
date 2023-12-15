@@ -50,6 +50,8 @@ jobs:
           # labels: ${{ steps.metadata.outputs.labels }}
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/helloworld:cache
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/helloworld:cache,mode=max
+          secrets: |
+            foo=bar baz
 
       - run: docker run --rm ghcr.io/${{ github.repository }}/helloworld@${{ steps.build.outputs.digest }} cat /etc/os-release
       - run: docker run --rm ghcr.io/${{ github.repository }}/helloworld@${{ steps.build.outputs.digest }} cat /etc/os-release.build
