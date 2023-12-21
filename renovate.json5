@@ -1,5 +1,24 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "github>int128/renovate-base",
   ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["int128/sandbox"],
+      "matchDatasources": ["github-releases"],
+      // https://github.com/renovatebot/renovate/discussions/14759#discussioncomment-2454979
+      "versioning": "regex:^(?<compatibility>.+)/v(?<major>\\d+)(\\.(?<minor>\\d+))(\\.(?<patch>\\d+))$",
+      "automerge": false,
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["^README\\.md"],
+      "matchStrings": ["ref=(?<currentValue>(?<depName>.+?)/.+?)\""],
+      "packageNameTemplate": "int128/sandbox",
+      "datasourceTemplate": "github-releases",
+    }
+  ]
 }
