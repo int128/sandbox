@@ -1,5 +1,15 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "github>int128/renovate-base",
   ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["^README\\.md"],
+      "matchStrings": ["ref=(?<currentValue>(?<depName>.+?)/(?<extractVersion>.+?))\""],
+      "packageNameTemplate": "int128/sandbox",
+      "datasourceTemplate": "github-releases",
+    }
+  ]
 }
