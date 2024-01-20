@@ -1,5 +1,2 @@
-FROM debian:bookworm AS builder
-
-FROM builder
-
+FROM debian:bookworm
 RUN cat /etc/os-release > /etc/os-release.build
