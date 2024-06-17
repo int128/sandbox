@@ -12,4 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: docker/setup-qemu-action@v3
-      - run: docker run --rm -q --platform linux/arm64 -v "$GITHUB_WORKSPACE:/workspace" ubuntu:jammy bash -c 'ls -la /workspace; apt-get update'
+      - run: docker run --rm -q --platform linux/arm64 -v "$GITHUB_WORKSPACE:$GITHUB_WORKSPACE" -w "$GITHUB_WORKSPACE" -u "$(id -u):$(id -g)" ubuntu:jammy bash -c "$script"
+        env:
+          script: |
+            ls -la
+            uname -a
+            apt-get update
