@@ -9,5 +9,18 @@ jobs:
   do:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    services:
+      db:
+        image: postgres:16
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: sandbox
+          POSTGRES_PASSWORD: sandbox
+          POSTGRES_DB: sandbox
+          POSTGRES_INITDB_ARGS: '-c max_connections=200'
     steps:
       - uses: actions/checkout@v4
+      - run: psql -U sandbox -h localhost postgres -c 'SHOW max_connections;'
+        env:
+          PGPASSWORD: sandbox
