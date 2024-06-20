@@ -11,3 +11,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      - run: |
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          ### Hello world! :rocket:
+          https://github.com/int128/sandbox/pull/168
+          EOF
