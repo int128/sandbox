@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
   b:
-    if: false
+    if: contains(github.event.pull_request.labels.*.name, 'test')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
