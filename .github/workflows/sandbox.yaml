@@ -6,7 +6,21 @@ on:
       - .github/workflows/sandbox.yaml
 
 jobs:
-  do:
+  a:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+  b:
+    if: false
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+  c:
+    needs:
+      - a
+      - b
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
