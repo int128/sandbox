@@ -3,6 +3,8 @@ name: notify
 on:
   pull_request:
   push:
+    branches:
+      - main
 
 jobs:
   slack:
@@ -10,3 +12,5 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: quipper/slack-notification-action@v2
+        with:
+          slack-channel-id: TEST
