@@ -14,3 +14,9 @@ jobs:
       - uses: quipper/slack-notification-action@v2
         with:
           slack-channel-id: TEST
+
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - run: exit 1
