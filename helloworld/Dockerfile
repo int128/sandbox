@@ -2,4 +2,7 @@ FROM debian:bookworm AS builder
 
 FROM builder
 
-RUN cat /etc/os-release > /etc/os-release.build
+ARG BAR
+
+COPY build.sh /
+RUN bash /build.sh
