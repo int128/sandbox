@@ -7,16 +7,12 @@ on:
       - main
 
 jobs:
-  slack:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: quipper/slack-notification-action@v2
-        with:
-          slack-channel-id: TEST
-
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - run: exit 1
+      - if: always()
+        uses: quipper/slack-notification-action@v2
+        with:
+          slack-channel-id: TEST
