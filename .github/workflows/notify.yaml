@@ -1,0 +1,12 @@
+name: notify
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  slack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: quipper/slack-notification-action@v2
