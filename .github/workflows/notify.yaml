@@ -13,8 +13,6 @@ jobs:
     steps:
       - run: exit 1
       - if: always()
-        run: echo '${{ job.status }}'
-      - if: always()
         uses: quipper/slack-notification-action@v2
         with:
           slack-channel-id: TEST
