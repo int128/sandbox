@@ -11,3 +11,5 @@ jobs:
     timeout-minutes: 10
     steps:
       - run: ps axfu
+      - run: sudo pkill -INT Runner.Listener
+      - run: sleep 60
