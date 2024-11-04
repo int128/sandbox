@@ -27,7 +27,7 @@
         "^Makefile$"
       ],
       "matchStrings": [
-        "^GOLANGCI_LINT_VERSION *.?= *(?<currentValue>.+)$"
+        "^GOLANGCI_LINT_VERSION *.?= *(?<currentValue>.+)\\n"
       ],
       "depNameTemplate": "golangci/golangci-lint",
       "datasourceTemplate": "github-releases"
