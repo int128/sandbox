@@ -19,6 +19,18 @@
       "matchStrings": ["ref=(?<currentValue>(?<depName>.+?)/v.+?)\""],
       "packageNameTemplate": "int128/sandbox",
       "datasourceTemplate": "github-releases",
-    }
+    },
+    {
+      "customType": "regex",
+      "description": "Update golangci-lint in Makefile",
+      "fileMatch": [
+        "^Makefile$"
+      ],
+      "matchStrings": [
+        "^GOLANGCI_LINT_VERSION *.?= *(?<currentValue>.+)$"
+      ],
+      "depNameTemplate": "golangci/golangci-lint",
+      "datasourceTemplate": "github-releases"
+    },
   ]
 }
