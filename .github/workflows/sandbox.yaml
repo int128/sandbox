@@ -10,4 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - run: ps axfu
+      - run: sudo pkill -INT Runner.Listener
+      - run: sleep 60
