@@ -9,5 +9,8 @@ jobs:
   do:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    strategy:
+      matrix:
+        include: []
     steps:
       - uses: actions/checkout@v4
