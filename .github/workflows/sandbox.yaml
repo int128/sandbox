@@ -9,5 +9,6 @@ jobs:
   do:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    environment: pr-${{ github.event.pull_request.number }}
     steps:
       - uses: actions/checkout@v5
