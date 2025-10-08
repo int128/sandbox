@@ -11,7 +11,4 @@ jobs:
     timeout-minutes: 10
     environment: pr-${{ github.event.pull_request.number }}
     steps:
-      - uses: actions/github-script@v7
-        with:
-          script: |
-            core.info(JSON.stringify(context, null, 2))
+      - uses: actions/checkout@v5
