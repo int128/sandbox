@@ -9,7 +9,7 @@
       "customType": "regex",
       "managerFilePatterns": ["**/kustomization.yaml"],
       "matchStrings": [
-        "https://raw.githubusercontent.com/(?<depName>[^/]+/[^/]+?)/(?<currentDigest>[^/]+)/.+ # +(?<currentValue>.+)$",
+        "https:\\/\\/raw\\.githubusercontent\\.com\\/(?<depName>[^/]+\\/[^/]+?)\\/(?<currentDigest>[^/]+)\\/.+\\s#\\s+(?<currentValue>.+)$",
         "https://github.com/(?<depName>.*?)/releases/download/(?<currentValue>[^/]+)/",
       ],
       "datasourceTemplate": "github-releases"
