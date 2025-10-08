@@ -3,34 +3,4 @@
   "extends": [
     "github>int128/renovate-base",
   ],
-  "packageRules": [
-    {
-      "matchPackageNames": ["int128/sandbox"],
-      "matchDatasources": ["github-releases"],
-      // https://github.com/renovatebot/renovate/discussions/14759#discussioncomment-2454979
-      "versioning": "regex:^(?<compatibility>.+)/v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
-      "automerge": false,
-    }
-  ],
-  "customManagers": [
-    {
-      "customType": "regex",
-      "fileMatch": ["^README\\.md"],
-      "matchStrings": ["ref=(?<currentValue>(?<depName>.+?)/v.+?)\""],
-      "packageNameTemplate": "int128/sandbox",
-      "datasourceTemplate": "github-releases",
-    },
-    {
-      "customType": "regex",
-      "description": "Update golangci-lint in Makefile",
-      "fileMatch": [
-        "^Makefile$"
-      ],
-      "matchStrings": [
-        "GOLANGCI_LINT_VERSION *.?= *(?<currentValue>.+)\\n"
-      ],
-      "depNameTemplate": "golangci/golangci-lint",
-      "datasourceTemplate": "github-releases"
-    },
-  ]
 }
