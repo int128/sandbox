@@ -2,23 +2,18 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "github>int128/renovate-base",
-    "github>int128/go-renovate-config:go-directive",
     "config:best-practices",
   ],
-  "packageRules": [
-    {
-      "matchDepNames": [
-        "go",
-        "golang",
-      ],
-      "matchFileNames": [
-        "go.mod",
-        "Dockerfile",
-      ],
-      "groupName": "go",
-    },
-  ],
   "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["**/go.mod"],
+      "matchStrings": [
+        "^go\\s+(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)\\n",
+      ],
+      "datasourceTemplate": "docker",
+      "depNameTemplate": "golang"
+    },
     {
       "customType": "regex",
       "managerFilePatterns": ["**/kustomization.yaml"],
