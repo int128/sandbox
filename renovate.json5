@@ -6,9 +6,10 @@
   ],
   "customManagers": [
     {
+      "description": "Update go.mod with Dockerfile",
       "customType": "regex",
       "managerFilePatterns": ["go.mod"],
-      "matchStrings": ["go\\s+(?<currentValue>[\\d\\.]+)"],
+      "matchStrings": ["(?:^|\\n)go\\s+(?<currentValue>[0-9.]+)"],
       "datasourceTemplate": "docker",
       "depNameTemplate": "golang"
     },
