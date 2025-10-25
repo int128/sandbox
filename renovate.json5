@@ -8,7 +8,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": ["go.mod"],
-      "matchStrings": ["^go\\s+(?<currentValue>\\S+)"],
+      "matchStrings": ["go\\s+(?<currentValue>[\\d\\.]+)"],
       "datasourceTemplate": "docker",
       "depNameTemplate": "golang"
     },
