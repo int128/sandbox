@@ -5,6 +5,19 @@
     "github>int128/go-renovate-config:go-directive",
     "config:best-practices",
   ],
+  "packageRules": [
+    {
+      "matchDepNames": [
+        "go",
+        "golang",
+      ],
+      "matchFileNames": [
+        "go.mod",
+        "Dockerfile",
+      ],
+      "groupName": "go",
+    },
+  ],
   "customManagers": [
     {
       "customType": "regex",
