@@ -4,6 +4,15 @@
     "github>int128/renovate-base",
     "config:best-practices",
   ],
+  "packageRules": [
+    {
+      "description": "Avoid pin digest error",
+      "matchFileNames": ["go.mod"],
+      "matchDatasources": ["docker"],
+      "matchDepNames": ["golang"],
+      "pinDigests": false
+    }
+  ],
   "customManagers": [
     {
       "description": "Update go.mod with Dockerfile",
