@@ -7,7 +7,7 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": ["**/go.mod"],
+      "managerFilePatterns": ["go.mod"],
       "matchStrings": ["^go\\s+(?<currentValue>\\S+)"],
       "datasourceTemplate": "docker",
       "depNameTemplate": "golang"
