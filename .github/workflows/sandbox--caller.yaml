@@ -10,7 +10,16 @@ concurrency:
 jobs:
   a:
     uses: ./.github/workflows/sandbox.yaml
+    concurrency:
+      group: ${{ github.workflow }}--${{ github.ref }}--a
+      cancel-in-progress: true
   b:
     uses: ./.github/workflows/sandbox.yaml
+    concurrency:
+      group: ${{ github.workflow }}--${{ github.ref }}--b
+      cancel-in-progress: true
   c:
     uses: ./.github/workflows/sandbox.yaml
+    concurrency:
+      group: ${{ github.workflow }}--${{ github.ref }}--c
+      cancel-in-progress: true
