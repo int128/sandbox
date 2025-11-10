@@ -1,0 +1,17 @@
+name: sandbox / b
+
+on:
+  workflow_call:
+
+concurrency:
+  group: b--${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  do:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - run: echo '${{ github.workflow_ref }}'
+      - run: echo '${{ github.workflow }}'
