@@ -1,0 +1,10 @@
+name: sandbox2
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/sandbox2.yaml
+
+jobs:
+  sandbox:
+    uses: ./.github/workflows/sandbox.yaml
