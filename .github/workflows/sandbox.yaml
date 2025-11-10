@@ -2,9 +2,13 @@ name: sandbox
 
 on:
   workflow_call:
-  pull_request:
-    paths:
-      - .github/workflows/sandbox.yaml
+  # pull_request:
+  #   paths:
+  #     - .github/workflows/sandbox.yaml
+
+concurrency:
+  group: ${{ github.workflow }}--${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   do:

@@ -1,0 +1,16 @@
+name: sandbox / caller
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}--${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  a:
+    uses: ./.github/workflows/sandbox.yaml
+  b:
+    uses: ./.github/workflows/sandbox.yaml
+  c:
+    uses: ./.github/workflows/sandbox.yaml
