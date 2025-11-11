@@ -6,8 +6,41 @@ on:
       - .github/workflows/sandbox.yaml
 
 jobs:
-  do:
+  using-checks:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      checks: write
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        with:
+          script: |
+            core.info(
+              JSON.stringify(
+                await github.rest.checks.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: 'example',
+                  head_sha: context.payload.pull_request.head.sha,
+                  status: 'completed',
+                  output: {
+                    title: 'Example',
+                    summary: `Value`
+                  },
+                })
+              )
+            )
+
+      - uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        with:
+          script: |
+            core.info(
+              JSON.stringify(
+                await github.rest.checks.listForRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: context.payload.pull_request.head.sha,
+                  check_name: 'example',
+                })
+              )
+            )
