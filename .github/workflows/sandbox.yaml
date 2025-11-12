@@ -21,10 +21,6 @@ jobs:
               name: 'example-check',
               head_sha: context.payload.pull_request.head.sha,
               status: 'in_progress',
-              output: {
-                title: 'Example Check',
-                summary: `Value1`
-              },
             })
             core.info(JSON.stringify(created, undefined, 2))
 
