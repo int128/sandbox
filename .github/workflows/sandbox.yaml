@@ -41,14 +41,14 @@ jobs:
       - uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
         with:
           script: |
-            const { data: checks } = await github.rest.checks.listForRef({
+            const { data: listChecks } = await github.rest.checks.listForRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: context.payload.pull_request.head.sha,
               check_name: 'example-check',
             })
-            core.info(JSON.stringify(checks, undefined, 2))
-            core.info(checks.check_runs[0].output.text)
+            core.info(JSON.stringify(listChecks, undefined, 2))
+            core.info(listChecks.check_runs.at(0)?.output?.text)
 
   using-commit-status:
     runs-on: ubuntu-latest
