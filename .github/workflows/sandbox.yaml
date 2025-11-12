@@ -32,7 +32,8 @@ jobs:
               conclusion: 'success',
               output: {
                 title: 'Example Check',
-                summary: `Value2`
+                summary: `Value2`,
+                text: 'Value3',
               },
             })
             core.info(JSON.stringify(updated, undefined, 2))
@@ -47,6 +48,7 @@ jobs:
                 check_name: 'example-check',
             })
             core.info(JSON.stringify(checks, undefined, 2))
+            core.info(checks.check_runs[0].output.text)
 
   using-commit-status:
     runs-on: ubuntu-latest
