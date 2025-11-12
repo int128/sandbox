@@ -22,6 +22,7 @@ jobs:
               head_sha: context.payload.pull_request.head.sha,
               status: 'in_progress',
               output: {
+                title: 'Example Check',
                 summary: `Value1`
               },
             })
@@ -37,6 +38,7 @@ jobs:
               status: 'completed',
               conclusion: 'success',
               output: {
+                title: 'Example Check',
                 summary: `Value2`
               },
             })
