@@ -44,8 +44,8 @@ jobs:
             const { data: checks } = await github.rest.checks.listForRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-                ref: context.payload.pull_request.head.sha,
-                check_name: 'example-check',
+              ref: context.payload.pull_request.head.sha,
+              check_name: 'example-check',
             })
             core.info(JSON.stringify(checks, undefined, 2))
             core.info(checks.check_runs[0].output.text)
