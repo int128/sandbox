@@ -28,9 +28,6 @@ jobs:
             })
             core.info(JSON.stringify(created, undefined, 2))
 
-      - uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
-        with:
-          script: |
             const { data: updated } = await github.rest.checks.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
