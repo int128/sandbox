@@ -20,6 +20,10 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number,
-              body: 'Make sure your changes are correct.',
+              body: process.env.body,
               event: 'REQUEST_CHANGES'
             });
+        env:
+          body: |
+            # :warning: Example!
+            This is an example.
