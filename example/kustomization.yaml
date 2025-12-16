@@ -2,4 +2,4 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - https://raw.githubusercontent.com/argoproj/argo-cd/becb020064fe9be5381bf6e5818ff8587ca8f377/manifests/ha/install.yaml # v3.1.8
-  - https://github.com/argoproj/argo-workflows/releases/download/v3.7.2/install.yaml
+  - https://github.com/argoproj/argo-workflows/releases/download/v3.7.6/install.yaml
