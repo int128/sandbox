@@ -4,6 +4,10 @@ on:
   pull_request:
     paths:
       - .github/workflows/sandbox.yaml
+    types:
+      - opened
+      - synchronize
+      - labeled
 
 jobs:
   do:
