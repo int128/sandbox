@@ -1,9 +1,10 @@
-name: sandbox
+name: github-script-typescript
 
 on:
   pull_request:
     paths:
-      - .github/workflows/sandbox.yaml
+      - .github/workflows/github-script-typescript.yaml
+      - github-script-typescript/**
 
 jobs:
   do:
@@ -14,4 +15,4 @@ jobs:
       - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
-            core.info(JSON.stringify(context.payload, undefined, 2))
+            return await require('./github-script-typescript/index.ts').main({ core, context, github })
